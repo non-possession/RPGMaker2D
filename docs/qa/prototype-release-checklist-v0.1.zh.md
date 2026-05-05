@@ -25,6 +25,14 @@
 /usr/local/bin/godot --headless --path . --quit-after 5
 ```
 
+可视截图检查需要图形渲染：
+
+```bash
+/usr/local/bin/godot --path . --script res://scripts/tools/capture_qa_screenshots.gd
+```
+
+截图会输出到本地 `docs/qa/screenshots/`，该目录不纳入 Git。
+
 预期：
 
 ```text

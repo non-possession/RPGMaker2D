@@ -78,7 +78,7 @@ func _create_content() -> void:
 	body.name = "Body"
 	body.text = "一名测绘人员来到即将拆除的乡村旧校舍。\n他本来只是记录现状，直到某些名字开始重新变得具体。"
 	body.position = Vector2(100, 262)
-	body.size = Vector2(430, 84)
+	body.size = Vector2(560, 84)
 	body.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 	body.add_theme_font_size_override("font_size", 18)
 	body.add_theme_color_override("font_color", Color(0.9, 0.86, 0.76, 0.86))
