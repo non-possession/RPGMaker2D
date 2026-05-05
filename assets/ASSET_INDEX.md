@@ -23,6 +23,7 @@ This index tracks generated and placeholder assets for the prototype.
 | OBJ05 | `assets/sprites/objects/obj05_paper_plane_broken_pencil.png` | integrated v1 | Paper plane, broken pencil, desk leg. Raw chroma-key and alpha outputs kept in `assets/originals/generated/`. |
 | OBJ06 | `assets/sprites/objects/obj06_archive_father_record.png` | integrated v1 | Archive cabinet, roster, old photo. v2 can reduce roster text clarity. |
 | OBJ08 | `assets/sprites/objects/obj08_essay_fragment.png` | integrated v1 | Essay fragment and desk drawer for He Xiaoman memory. |
+| AUDIO-PROC | `scripts/audio_controller.gd` | integrated v1 | Procedural placeholder ambience and SFX: classroom wind, paper record, shutter, memory swell, drawer, final tone. Replace with authored audio later. |
 
 ## Placeholder Directories
 

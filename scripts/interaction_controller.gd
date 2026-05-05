@@ -7,6 +7,7 @@ var survey_progress: Control
 var photo_flash: Control
 var ui_toast: Control
 var ending_card: Control
+var audio_controller: Node
 var player: Node
 var overlays: Dictionary = {}
 var completion_markers: Dictionary = {}
@@ -24,6 +25,7 @@ func setup(deps: Dictionary) -> void:
 	photo_flash = deps["photo_flash"]
 	ui_toast = deps["ui_toast"]
 	ending_card = deps["ending_card"]
+	audio_controller = deps.get("audio_controller", null)
 	player = deps["player"]
 	overlays = deps.get("overlays", {})
 	completion_markers = deps.get("completion_markers", {})
@@ -72,6 +74,8 @@ func _trigger(interactable: Area2D) -> void:
 	input_locked = true
 	player.set_input_locked(true)
 	var data: Dictionary = interactable.data
+	if audio_controller != null and audio_controller.has_method("play_interaction"):
+		audio_controller.call("play_interaction", str(data.get("id", "")), data)
 	if data.get("photo_required", false):
 		photo_flash.play_flash("测绘照片记录")
 	_play_overlay(str(data.get("overlay_id", "")))
@@ -88,6 +92,8 @@ func _apply_interaction(data: Dictionary) -> void:
 	game_state.complete_survey_items(data.get("survey_items", []))
 	game_state.mark_completed(str(data.get("id", "")))
 	_show_completion_marker(str(data.get("id", "")))
+	if audio_controller != null and audio_controller.has_method("play_completion"):
+		audio_controller.call("play_completion", str(data.get("id", "")))
 	_update_runtime_asset_state(str(data.get("id", "")))
 	if ui_toast != null:
 		ui_toast.show_toast("已记录：%s" % data.get("label", "调查点"))

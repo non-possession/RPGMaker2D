@@ -11,6 +11,7 @@ const PhotoFlashScript = preload("res://scripts/photo_flash.gd")
 const DebugHudScript = preload("res://scripts/debug_hud.gd")
 const UiToastScript = preload("res://scripts/ui_toast.gd")
 const EndingCardScript = preload("res://scripts/ending_card.gd")
+const AudioControllerScript = preload("res://scripts/audio_controller.gd")
 const Interactions = preload("res://data/interactions.gd")
 const Names = preload("res://data/names.gd")
 
@@ -34,10 +35,12 @@ var overlays := {}
 var completion_markers := {}
 var runtime_asset_sprites := {}
 var debug_markers_visible := false
+var audio_controller: Node
 
 func _ready() -> void:
 	_create_game_state()
 	_create_classroom()
+	_create_audio()
 	_create_player()
 	_create_ui_and_controller()
 	_create_interactables()
@@ -267,6 +270,12 @@ func _try_add_generated_memory_background(parent: Node) -> void:
 func _asset_file_exists(path: String) -> bool:
 	return ResourceLoader.exists(path) or FileAccess.file_exists(path)
 
+func _create_audio() -> void:
+	audio_controller = Node.new()
+	audio_controller.name = "AudioController"
+	audio_controller.set_script(AudioControllerScript)
+	add_child(audio_controller)
+
 func _create_player() -> void:
 	player = PlayerScene.instantiate()
 	player.position = Vector2(185, 408)
@@ -313,6 +322,7 @@ func _create_ui_and_controller() -> void:
 		"overlays": overlays,
 		"completion_markers": completion_markers,
 		"runtime_asset_sprites": runtime_asset_sprites,
+		"audio_controller": audio_controller,
 	})
 	var debug_hud := Control.new()
 	debug_hud.name = "DebugHUD"
@@ -412,6 +422,8 @@ func _completion_marker_offset(id: String) -> Vector2:
 func _play_intro() -> void:
 	var dialogue = get_node("UI/DialogueBox")
 	player.set_input_locked(true)
+	if audio_controller != null and audio_controller.has_method("play_intro"):
+		audio_controller.call("play_intro")
 	dialogue.dialogue_finished.connect(func(id):
 		if id == "intro_vehicle":
 			player.set_input_locked(false)
