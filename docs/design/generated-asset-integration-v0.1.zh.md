@@ -143,6 +143,7 @@ FLOW_SMOKE_TEST_OK
 ```bash
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/title_screen_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/visual_feedback_smoke_test.gd
 /usr/local/bin/godot --headless --path . --quit-after 5
 ```
 
@@ -151,6 +152,7 @@ FLOW_SMOKE_TEST_OK
 ```text
 TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
+VISUAL_FEEDBACK_SMOKE_TEST_OK
 ```
 
 第三批后续美术 v2 目标：

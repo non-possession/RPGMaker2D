@@ -21,6 +21,7 @@
 ```bash
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/title_screen_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/visual_feedback_smoke_test.gd
 /usr/local/bin/godot --headless --path . --quit-after 5
 ```
 
@@ -29,6 +30,7 @@
 ```text
 TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
+VISUAL_FEEDBACK_SMOKE_TEST_OK
 ```
 
 已覆盖：
@@ -40,6 +42,7 @@ FLOW_SMOKE_TEST_OK
 - A1-A12 按顺序可达、可触发、可完成。
 - flags、测绘项、完成纸签、结尾卡正常。
 - A5/A10/A12 保持拍照反馈事件。
+- 真实触发路径下，拍照取景框/快门闪光和显影层会进入可见状态。
 - 结尾目标收束为“测绘完成。最终照片已保存。”，不再暗示未实现的车辆返回交互。
 
 ## 手动展示路径

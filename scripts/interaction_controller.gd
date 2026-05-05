@@ -81,7 +81,7 @@ func _run_interaction_sequence(data: Dictionary) -> void:
 		audio_controller.call("play_interaction", str(data.get("id", "")), data)
 	if data.get("photo_required", false):
 		photo_flash.play_flash("测绘照片记录")
-		await get_tree().create_timer(0.34).timeout
+		await get_tree().create_timer(0.58).timeout
 	else:
 		await get_tree().create_timer(_pre_dialogue_pause(data)).timeout
 	_play_overlay(str(data.get("overlay_id", "")))
@@ -129,10 +129,10 @@ func _play_overlay(overlay_id: String) -> void:
 	overlay.visible = true
 	overlay.modulate.a = 0.0
 	var tween := create_tween()
-	tween.tween_property(overlay, "modulate:a", 1.0, 0.35)
-	tween.tween_interval(1.0)
+	tween.tween_property(overlay, "modulate:a", 1.0, 0.28)
+	tween.tween_interval(1.45)
 	if overlay_id != "overlay_final_classroom":
-		tween.tween_property(overlay, "modulate:a", 0.0, 1.0)
+		tween.tween_property(overlay, "modulate:a", 0.0, 0.9)
 
 func _show_completion_marker(id: String) -> void:
 	if not completion_markers.has(id):

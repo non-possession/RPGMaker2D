@@ -242,13 +242,13 @@ func _create_atmosphere(parent: Node2D) -> void:
 		atmosphere.add_child(dust)
 
 func _create_overlays(parent: Node2D) -> void:
-	overlays["overlay_blackboard_surface"] = _overlay(parent, "OverlayBlackboardSurface", Vector2(245, 78), Vector2(330, 76), Color(0.86, 0.65, 0.33, 0.28), "田野的风 / 放学后的笑声")
-	overlays["overlay_place_disturbance"] = _overlay(parent, "OverlayPlaceDisturbance", Vector2(560, 80), Vector2(150, 90), Color(0.12, 0.13, 0.16, 0.45), "这个地名\n不是空的")
-	overlays["overlay_paper_plane_emotion"] = _overlay(parent, "OverlayPaperPlaneEmotion", Vector2(105, 320), Vector2(140, 90), Color(0.1, 0.11, 0.12, 0.42), "纸飞机\n断铅笔\n说不清的湿意")
-	overlays["overlay_father_photo"] = _overlay(parent, "OverlayFatherPhoto", Vector2(115, 120), Vector2(140, 105), Color(0.75, 0.62, 0.38, 0.38), "旧照片\n少年老李\n眼睛很亮")
-	overlays["overlay_blackboard_photo"] = _overlay(parent, "OverlayBlackboardPhoto", Vector2(250, 80), Vector2(320, 68), Color(0.95, 0.95, 0.8, 0.22), "以后都要去大城市")
-	overlays["overlay_girl_memory"] = _overlay(parent, "OverlayGirlMemory", Vector2(330, 220), Vector2(130, 86), Color(0.84, 0.58, 0.33, 0.3), "我的家乡……\n何小满")
-	overlays["overlay_final_classroom"] = _overlay(parent, "OverlayFinalClassroom", Vector2(80, 60), Vector2(720, 420), Color(0.9, 0.68, 0.38, 0.28), "最终照片\n这间教室曾经不是空的")
+	overlays["overlay_blackboard_surface"] = _overlay(parent, "OverlayBlackboardSurface", Vector2(245, 78), Vector2(330, 76), Color(0.9, 0.66, 0.28, 0.42), "田野的风 / 放学后的笑声")
+	overlays["overlay_place_disturbance"] = _overlay(parent, "OverlayPlaceDisturbance", Vector2(560, 80), Vector2(150, 90), Color(0.08, 0.09, 0.11, 0.62), "这个地名\n不是空的")
+	overlays["overlay_paper_plane_emotion"] = _overlay(parent, "OverlayPaperPlaneEmotion", Vector2(105, 320), Vector2(140, 90), Color(0.06, 0.065, 0.07, 0.62), "纸飞机\n断铅笔\n说不清的湿意")
+	overlays["overlay_father_photo"] = _overlay(parent, "OverlayFatherPhoto", Vector2(115, 120), Vector2(140, 105), Color(0.82, 0.64, 0.32, 0.54), "旧照片\n少年老李\n眼睛很亮")
+	overlays["overlay_blackboard_photo"] = _overlay(parent, "OverlayBlackboardPhoto", Vector2(250, 80), Vector2(320, 68), Color(0.96, 0.9, 0.56, 0.38), "以后都要去大城市")
+	overlays["overlay_girl_memory"] = _overlay(parent, "OverlayGirlMemory", Vector2(330, 220), Vector2(130, 86), Color(0.9, 0.58, 0.26, 0.46), "我的家乡……\n何小满")
+	overlays["overlay_final_classroom"] = _overlay(parent, "OverlayFinalClassroom", Vector2(80, 60), Vector2(720, 420), Color(0.9, 0.68, 0.38, 0.38), "最终照片\n这间教室曾经不是空的")
 	_try_add_generated_memory_background(overlays["overlay_final_classroom"])
 	var final_overlay: ColorRect = overlays["overlay_final_classroom"]
 	_rect(final_overlay, "FinalLightA", Vector2(482, 54), Vector2(54, 380), Color(1.0, 0.86, 0.48, 0.16))
@@ -471,6 +471,10 @@ func _static_rect(parent: Node, body_name: String, position: Vector2, size: Vect
 
 func _overlay(parent: Node, overlay_name: String, position: Vector2, size: Vector2, color: Color, caption := "") -> ColorRect:
 	var rect := _rect(parent, overlay_name, position, size, color)
+	var border_top := _rect(rect, "MemoryBorderTop", Vector2.ZERO, Vector2(size.x, 2), Color(1.0, 0.86, 0.48, 0.72))
+	var border_bottom := _rect(rect, "MemoryBorderBottom", Vector2(0, size.y - 2), Vector2(size.x, 2), Color(1.0, 0.86, 0.48, 0.52))
+	border_top.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	border_bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if not caption.is_empty():
 		var label := Label.new()
 		label.text = caption

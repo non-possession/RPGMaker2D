@@ -31,6 +31,7 @@
 ```bash
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/title_screen_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/visual_feedback_smoke_test.gd
 ```
 
 预期输出：
@@ -38,6 +39,7 @@
 ```text
 TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
+VISUAL_FEEDBACK_SMOKE_TEST_OK
 ```
 
 ## 验收流程
@@ -89,6 +91,7 @@ FLOW_SMOKE_TEST_OK
 - A4 或 A5 后测绘进度 `墙面附着物` 完成。
 - A5 后设置 `school_closure_seen`。
 - A5 会触发拍照取景框和白色快门闪光。
+- 拍照反馈应能明显看到暗色取景框、亮色边框、“测绘照片记录”字样和白色快门闪光。
 
 ### 3. A6 地点扰动
 
@@ -153,6 +156,7 @@ FLOW_SMOKE_TEST_OK
 - 设置 `friend_paths_seen`。
 - 测绘进度 `现状照片` 完成。
 - 出现黑板复查显影。
+- 显影层应比现实背景更明显，能看到局部暖色/暗色覆盖和细边框。
 
 ### 8. A11 女同学线索
 
