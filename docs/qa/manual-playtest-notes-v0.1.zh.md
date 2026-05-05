@@ -96,6 +96,7 @@ QA_SCREENSHOT_CAPTURE_OK
 
 - `[fixed]` 调查点 `Area2D` 曾未明确检测玩家所在的 collision layer；现已将调查点 mask 指向玩家层。
 - `[pass]` `playable_reachability_smoke_test.gd` 已确认 A1-A12 在玩家进入交互热区后，能通过真实触发路径完成。
+- `[fixed]` 交互提示曾只显示“调查/登记”等动作；现显示“动作：物件名”，并由烟测确认提示文案不溢出。
 - `[pending]` 自动测试只证明热区可触发，不能替代人工判断玩家是否容易自然走到/发现每个调查点。
 
 ### 表现与节奏

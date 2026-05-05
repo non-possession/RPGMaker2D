@@ -178,7 +178,7 @@ func _update_prompt() -> void:
 		return
 	if current != null:
 		_set_focused_interactable(current)
-		interaction_prompt.show_prompt(str(current.data.get("prompt", "调查")), true)
+		interaction_prompt.show_prompt(_prompt_text_for(current.data), true)
 		return
 	var locked := _nearest_interactable(false)
 	if locked != null:
@@ -189,6 +189,13 @@ func _update_prompt() -> void:
 			return
 	_set_focused_interactable(null)
 	interaction_prompt.hide_prompt()
+
+func _prompt_text_for(data: Dictionary) -> String:
+	var action := str(data.get("prompt", "调查"))
+	var label := str(data.get("label", ""))
+	if label.is_empty() or action.contains(label):
+		return action
+	return "%s：%s" % [action, label]
 
 func _set_focused_interactable(next_interactable: Area2D) -> void:
 	if focused_interactable == next_interactable:

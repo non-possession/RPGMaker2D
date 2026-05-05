@@ -6,6 +6,7 @@ var game_state: Node
 var controller: Node
 var player: Node
 var dialogue_box: Control
+var interaction_prompt: Control
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -19,10 +20,12 @@ func _run() -> void:
 	controller = main_scene.get_node("InteractionController")
 	player = main_scene.get_node("Player")
 	dialogue_box = main_scene.get_node("UI/DialogueBox")
+	interaction_prompt = main_scene.get_node("UI/InteractionPrompt")
 	_assert(game_state != null, "GameState exists")
 	_assert(controller != null, "InteractionController exists")
 	_assert(player != null, "Player exists")
 	_assert(dialogue_box != null, "DialogueBox exists")
+	_assert(interaction_prompt != null, "InteractionPrompt exists")
 
 	for id in controller.DEBUG_ORDER:
 		await _complete_by_playable_trigger(id)
@@ -52,6 +55,9 @@ func _complete_by_playable_trigger(id: String) -> void:
 	await _wait_frames(2)
 	var current = controller.call("_current_interactable")
 	_assert(current == target, "%s becomes focused at playable approach position, got %s" % [id, _interactable_id(current)])
+	_assert(interaction_prompt.visible, "%s shows interaction prompt when focused" % id)
+	_assert(_prompt_text_contains(target.data), "%s prompt names its target" % id)
+	_assert(_prompt_text_fits(), "%s prompt text fits the prompt box" % id)
 	if current != target:
 		return
 	controller.call("_trigger", current)
@@ -99,6 +105,24 @@ func _interactable_id(item) -> String:
 	if item == null:
 		return "-"
 	return str(item.data.get("id", "?"))
+
+func _prompt_text_contains(data: Dictionary) -> bool:
+	if interaction_prompt == null:
+		return false
+	var label_node: Label = interaction_prompt.get("label")
+	if label_node == null:
+		return false
+	var label_text := label_node.text
+	return label_text.contains(str(data.get("prompt", ""))) and label_text.contains(str(data.get("label", "")))
+
+func _prompt_text_fits() -> bool:
+	var label_node: Label = interaction_prompt.get("label")
+	if label_node == null:
+		return false
+	var font := label_node.get_theme_font("font")
+	var font_size := label_node.get_theme_font_size("font_size")
+	var text_width := font.get_string_size(label_node.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	return text_width <= label_node.size.x
 
 func _assert(condition: bool, message: String) -> void:
 	if not condition:
