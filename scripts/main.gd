@@ -44,7 +44,10 @@ func _ready() -> void:
 	_create_player()
 	_create_ui_and_controller()
 	_create_interactables()
-	_play_intro()
+	if bool(get_meta("skip_intro_for_qa", false)):
+		player.set_input_locked(false)
+	else:
+		_play_intro()
 
 func _process(_delta: float) -> void:
 	_handle_dev_shortcuts()

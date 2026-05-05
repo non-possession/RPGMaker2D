@@ -77,6 +77,9 @@ func _trigger(interactable: Area2D) -> void:
 	_run_interaction_sequence(data)
 
 func _run_interaction_sequence(data: Dictionary) -> void:
+	var overlay_id := str(data.get("overlay_id", ""))
+	if data.get("photo_required", false) or not overlay_id.is_empty():
+		_set_cinematic_focus(true)
 	if audio_controller != null and audio_controller.has_method("play_interaction"):
 		audio_controller.call("play_interaction", str(data.get("id", "")), data)
 	if data.get("photo_required", false):
@@ -84,8 +87,8 @@ func _run_interaction_sequence(data: Dictionary) -> void:
 		await get_tree().create_timer(0.58).timeout
 	else:
 		await get_tree().create_timer(_pre_dialogue_pause(data)).timeout
-	_play_overlay(str(data.get("overlay_id", "")))
-	if not str(data.get("overlay_id", "")).is_empty():
+	_play_overlay(overlay_id)
+	if not overlay_id.is_empty():
 		await get_tree().create_timer(0.16).timeout
 	dialogue_box.play(str(data.get("dialogue_id", "")), game_state)
 
@@ -116,6 +119,7 @@ func _apply_interaction(data: Dictionary) -> void:
 		ui_toast.show_toast("已记录：%s" % data.get("label", "调查点"))
 	if str(data.get("id", "")) == "A12" and ending_card != null:
 		ending_card.show_card()
+	_set_cinematic_focus(false)
 	for item in get_tree().get_nodes_in_group("interactables"):
 		item.queue_redraw()
 	input_locked = false
@@ -161,6 +165,10 @@ func _show_single_runtime_asset(keys: Array[String], active_key: String) -> void
 		var sprite = runtime_asset_sprites[key]
 		if sprite != null and is_instance_valid(sprite):
 			sprite.visible = key == active_key
+
+func _set_cinematic_focus(active: bool) -> void:
+	if survey_progress != null and survey_progress.has_method("set_cinematic_focus"):
+		survey_progress.call("set_cinematic_focus", active)
 
 func _update_prompt() -> void:
 	var current := _current_interactable()

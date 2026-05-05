@@ -7,6 +7,7 @@ var game_state: Node
 var panel: Panel
 var label: Label
 var expanded := false
+var focus_tween: Tween
 
 func _ready() -> void:
 	panel = Panel.new()
@@ -47,7 +48,15 @@ func _process(_delta: float) -> void:
 func setup(next_game_state: Node) -> void:
 	game_state = next_game_state
 	visible = true
+	modulate.a = 1.0
 	refresh()
+
+func set_cinematic_focus(active: bool) -> void:
+	if focus_tween != null:
+		focus_tween.kill()
+	focus_tween = create_tween()
+	var target_alpha := 0.24 if active else 1.0
+	focus_tween.tween_property(self, "modulate:a", target_alpha, 0.18)
 
 func refresh() -> void:
 	if game_state == null or label == null:
