@@ -1,5 +1,22 @@
 extends SceneTree
 
+const Objectives = preload("res://data/objectives.gd")
+
+const EXPECTED_OBJECTIVES := {
+	"A1": "查看讲台上的测绘表。",
+	"A2": "完成第一批测绘：黑板、课桌、奖状、撤并通知。",
+	"A3": "完成第一批测绘：黑板、课桌、奖状、撤并通知。",
+	"A4": "完成第一批测绘：黑板、课桌、奖状、撤并通知。",
+	"A5": "完成第一批测绘：黑板、课桌、奖状、撤并通知。",
+	"A6": "调查右侧墙上的旧地图/校名牌。",
+	"A7": "查看左下角的纸飞机和断铅笔。",
+	"A8": "检查左侧档案柜里的旧记录。",
+	"A9": "登记右侧窗边墙体裂缝。",
+	"A10": "回到黑板，拍照复查字迹。",
+	"A11": "查看中排课桌里的作文本碎页。",
+	"A12": "在教室中央拍摄最终现状。",
+}
+
 var failures: Array[String] = []
 var main_scene: Node
 var game_state: Node
@@ -49,6 +66,7 @@ func _complete_by_playable_trigger(id: String) -> void:
 	_assert(target != null, "%s interactable exists" % id)
 	if target == null:
 		return
+	_assert(Objectives.current_objective(game_state) == EXPECTED_OBJECTIVES[id], "%s objective points to current task" % id)
 	_assert(game_state.can_interact(target.data), "%s is open before playable trigger" % id)
 	player.global_position = target.global_position
 	await _wait_physics_frames(8)
@@ -65,6 +83,8 @@ func _complete_by_playable_trigger(id: String) -> void:
 	_assert(game_state.is_completed(id), "%s completed via playable trigger" % id)
 	_assert(not bool(controller.input_locked), "%s unlocks input after dialogue" % id)
 	_assert(not bool(player.input_locked), "%s unlocks player after dialogue" % id)
+	if id == "A12":
+		_assert(Objectives.current_objective(game_state) == "测绘完成。最终照片已保存。", "final objective is closed after playable route")
 
 func _advance_dialogue_until_completed(id: String) -> void:
 	var guard := 0

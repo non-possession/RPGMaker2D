@@ -71,6 +71,7 @@ func _capture_a2_overlay(filename: String) -> void:
 	controller.call("_play_overlay", str(a2.data.get("overlay_id", "")))
 	await create_timer(0.22).timeout
 	await _wait_frames(2)
+	await RenderingServer.frame_post_draw
 	await _save_viewport(filename)
 	_cleanup_capture_scene(scene)
 	scene.queue_free()
@@ -90,6 +91,7 @@ func _capture_a5_photo(filename: String) -> void:
 	photo_flash.play_flash("测绘照片记录")
 	await create_timer(0.36).timeout
 	await _wait_frames(2)
+	await RenderingServer.frame_post_draw
 	await _save_viewport(filename)
 	_cleanup_capture_scene(scene)
 	scene.queue_free()
@@ -111,6 +113,7 @@ func _capture_a12_final(filename: String) -> void:
 	dialogue_box.play(str(a12.data.get("dialogue_id", "")), scene.get_node("GameState"))
 	await create_timer(0.34).timeout
 	await _wait_frames(2)
+	await RenderingServer.frame_post_draw
 	await _save_viewport(filename)
 	await create_timer(2.8).timeout
 	_cleanup_capture_scene(scene)
