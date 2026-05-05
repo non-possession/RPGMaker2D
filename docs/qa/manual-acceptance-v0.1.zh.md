@@ -5,6 +5,8 @@
 ## 准备
 
 - 运行项目主场景。
+- 项目默认先进入标题页，按 `E` 或 `Enter` 开始测绘并进入教室。
+- 标题页按 `Esc` 可退出。
 - 项目默认以全屏窗口运行。
 - 使用方向键或 WASD 移动。
 - 使用 `E` 或 `Enter` 推进对话/触发交互。
@@ -27,12 +29,14 @@
 每次改动后可先跑脚本级烟测，确认 A1-A12 顺序推进、flags、测绘项、完成纸签和结尾卡没有断：
 
 ```bash
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/title_screen_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
 ```
 
 预期输出：
 
 ```text
+TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
 ```
 
@@ -42,6 +46,8 @@ FLOW_SMOKE_TEST_OK
 
 预期：
 
+- 游戏启动后显示标题页《最后一间教室》。
+- 按 `E` 或 `Enter` 后进入教室流程。
 - 游戏启动后播放车上开场文本。
 - 对话期间主角不能移动。
 - 文本结束后进入教室，主角可移动。

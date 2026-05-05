@@ -141,6 +141,7 @@ FLOW_SMOKE_TEST_OK
 验证：
 
 ```bash
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/title_screen_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
 /usr/local/bin/godot --headless --path . --quit-after 5
 ```
@@ -148,6 +149,7 @@ FLOW_SMOKE_TEST_OK
 预期：
 
 ```text
+TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
 ```
 
