@@ -1,6 +1,10 @@
 extends SceneTree
 
 const OUT_DIR := "res://docs/qa/screenshots"
+const CAPTURE_SIZES := [
+	{"suffix": "default_960x540", "size": Vector2i(960, 540)},
+	{"suffix": "wide_1280x540", "size": Vector2i(1280, 540)},
+]
 
 var failures: Array[String] = []
 
@@ -9,8 +13,13 @@ func _initialize() -> void:
 
 func _run() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT_DIR))
-	await _capture_scene("res://scenes/title_screen.tscn", "title_screen.png", 6)
-	await _capture_scene("res://scenes/main.tscn", "main_intro.png", 12)
+	for item in CAPTURE_SIZES:
+		var suffix := str(item["suffix"])
+		var size: Vector2i = item["size"]
+		root.size = size
+		await process_frame
+		await _capture_scene("res://scenes/title_screen.tscn", "title_screen_%s.png" % suffix, 6)
+		await _capture_scene("res://scenes/main.tscn", "main_intro_%s.png" % suffix, 12)
 	if failures.is_empty():
 		print("QA_SCREENSHOT_CAPTURE_OK")
 		quit(0)
