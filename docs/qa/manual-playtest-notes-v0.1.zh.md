@@ -12,6 +12,7 @@
 TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
 VISUAL_FEEDBACK_SMOKE_TEST_OK
+PLAYABLE_REACHABILITY_SMOKE_TEST_OK
 ```
 
 自动验证已确认：
@@ -20,6 +21,7 @@ VISUAL_FEEDBACK_SMOKE_TEST_OK
 - A1-A12 可按顺序完成。
 - 结尾卡、测绘项、完成纸签、目标文案正常。
 - 真实触发路径下，拍照取景框/快门闪光和显影层会进入可见状态。
+- 玩家进入交互热区后，可通过正常触发路径按顺序完成 A1-A12。
 
 最近一次截图检查：
 
@@ -82,13 +84,19 @@ QA_SCREENSHOT_CAPTURE_OK
 
 ### 动线与交互
 
-状态：`[pending]`
+状态：`[partial]`
 
 - A1 是否容易找到。
 - A2/A3/A4/A5 第一批调查是否有足够指引。
 - A6/A7/A8/A9/A10 的空间回看是否清楚。
 - A11 作文本碎页是否容易漏掉。
 - A12 最后一张照片是否容易找到。
+
+当前记录：
+
+- `[fixed]` 调查点 `Area2D` 曾未明确检测玩家所在的 collision layer；现已将调查点 mask 指向玩家层。
+- `[pass]` `playable_reachability_smoke_test.gd` 已确认 A1-A12 在玩家进入交互热区后，能通过真实触发路径完成。
+- `[pending]` 自动测试只证明热区可触发，不能替代人工判断玩家是否容易自然走到/发现每个调查点。
 
 ### 表现与节奏
 
