@@ -42,11 +42,11 @@ func play_flash(caption_text := "PHOTO RECORDING") -> void:
 	viewfinder.modulate.a = 0.0
 	flash.color = Color(1, 1, 1, 0.0)
 	var tween := create_tween()
-	tween.tween_property(viewfinder, "modulate:a", 1.0, 0.08)
-	tween.tween_interval(0.08)
-	tween.tween_property(flash, "color:a", 0.85, 0.05)
-	tween.tween_property(flash, "color:a", 0.0, 0.25)
-	tween.parallel().tween_property(viewfinder, "modulate:a", 0.0, 0.3)
+	tween.tween_property(viewfinder, "modulate:a", 1.0, 0.1)
+	tween.tween_interval(0.12)
+	tween.tween_property(flash, "color:a", 0.82, 0.045)
+	tween.tween_property(flash, "color:a", 0.0, 0.22)
+	tween.parallel().tween_property(viewfinder, "modulate:a", 0.0, 0.34)
 	tween.tween_callback(func(): viewfinder.visible = false)
 
 func _bar(position: Vector2, size: Vector2) -> ColorRect:

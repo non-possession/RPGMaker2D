@@ -74,12 +74,29 @@ func _trigger(interactable: Area2D) -> void:
 	input_locked = true
 	player.set_input_locked(true)
 	var data: Dictionary = interactable.data
+	_run_interaction_sequence(data)
+
+func _run_interaction_sequence(data: Dictionary) -> void:
 	if audio_controller != null and audio_controller.has_method("play_interaction"):
 		audio_controller.call("play_interaction", str(data.get("id", "")), data)
 	if data.get("photo_required", false):
 		photo_flash.play_flash("测绘照片记录")
+		await get_tree().create_timer(0.34).timeout
+	else:
+		await get_tree().create_timer(_pre_dialogue_pause(data)).timeout
 	_play_overlay(str(data.get("overlay_id", "")))
+	if not str(data.get("overlay_id", "")).is_empty():
+		await get_tree().create_timer(0.16).timeout
 	dialogue_box.play(str(data.get("dialogue_id", "")), game_state)
+
+func _pre_dialogue_pause(data: Dictionary) -> float:
+	match str(data.get("id", "")):
+		"A7", "A8", "A11":
+			return 0.24
+		"A12":
+			return 0.42
+		_:
+			return 0.08
 
 func _finish_interaction(dialogue_id: String) -> void:
 	for item in nearby:

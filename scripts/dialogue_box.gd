@@ -15,7 +15,8 @@ var current_index := 0
 var current_id := ""
 var game_state: Node
 var is_playing := false
-var input_cooldown := 0
+var input_cooldown := 0.0
+var panel_tween: Tween
 
 func _ready() -> void:
 	visible = false
@@ -84,6 +85,7 @@ func _ready() -> void:
 	hint_label.add_theme_font_size_override("font_size", 12)
 	hint_label.add_theme_color_override("font_color", Color(0.72, 0.69, 0.62))
 	hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	hint_label.modulate.a = 0.0
 	panel.add_child(hint_label)
 
 func play(dialogue_id: String, next_game_state: Node) -> void:
@@ -92,15 +94,22 @@ func play(dialogue_id: String, next_game_state: Node) -> void:
 	current_lines = Dialogues.DIALOGUES.get(dialogue_id, [])
 	current_index = 0
 	is_playing = true
-	input_cooldown = 2
+	input_cooldown = 0.24
 	visible = true
+	modulate.a = 0.0
+	if panel_tween != null:
+		panel_tween.kill()
+	panel_tween = create_tween()
+	panel_tween.tween_property(self, "modulate:a", 1.0, 0.14)
 	_show_current_line()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if not is_playing:
 		return
-	if input_cooldown > 0:
-		input_cooldown -= 1
+	if input_cooldown > 0.0:
+		input_cooldown = max(0.0, input_cooldown - delta)
+		if input_cooldown == 0.0:
+			_reveal_hint()
 		return
 	if Input.is_action_just_pressed("interact"):
 		advance()
@@ -138,3 +147,25 @@ func _show_current_line() -> void:
 		text_label.size = Vector2(820, 86)
 	speaker_label.text = speaker
 	text_label.text = text
+	hint_label.modulate.a = 0.0
+	input_cooldown = _line_lock_duration(speaker, text)
+	text_label.modulate.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(text_label, "modulate:a", 1.0, 0.1)
+
+func _line_lock_duration(speaker: String, text: String) -> float:
+	var base := 0.18
+	if speaker == "旁白":
+		base = 0.28
+	elif speaker == "系统":
+		base = 0.14
+	elif speaker == "对讲机":
+		base = 0.2
+	var length_pause: float = min(0.62, float(text.length()) * 0.012)
+	if text.ends_with("。") or text.ends_with("……"):
+		length_pause += 0.08
+	return clamp(base + length_pause, 0.22, 0.92)
+
+func _reveal_hint() -> void:
+	var tween := create_tween()
+	tween.tween_property(hint_label, "modulate:a", 1.0, 0.12)
