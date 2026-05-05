@@ -1,6 +1,7 @@
 extends SceneTree
 
 const Interactions = preload("res://data/interactions.gd")
+const Objectives = preload("res://data/objectives.gd")
 
 var failures: Array[String] = []
 
@@ -94,6 +95,7 @@ func _validate_final_state(game_state: Node, ending_card: Control) -> void:
 	for item in ["current_photo", "left_items", "wall_items", "structure_damage", "final_photo"]:
 		_assert(game_state.survey_items.get(item, false), "survey item completed: %s" % item)
 	_assert(ending_card.visible, "ending card visible after A12")
+	_assert(Objectives.current_objective(game_state) == "测绘完成。最终照片已保存。", "final objective is closed")
 	_assert(Interactions.INTERACTIONS["A5"].get("photo_required", false), "A5 triggers photo feedback")
 	_assert(Interactions.INTERACTIONS["A10"].get("photo_required", false), "A10 triggers photo feedback")
 	_assert(Interactions.INTERACTIONS["A12"].get("photo_required", false), "A12 triggers photo feedback")

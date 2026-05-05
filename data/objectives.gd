@@ -4,7 +4,7 @@ static func current_objective(game_state: Node) -> String:
 	if game_state == null:
 		return "查看讲台上的测绘表。"
 	if game_state.has_flag("ending_seen"):
-		return "返回车辆，带走最终记录。"
+		return "测绘完成。最终照片已保存。"
 	if game_state.has_flag("final_photo_ready"):
 		return "拍摄教室最终现状。"
 	if game_state.has_flag("friend_paths_seen"):
