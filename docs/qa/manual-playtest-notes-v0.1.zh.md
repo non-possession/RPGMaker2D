@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-状态：`[doing]`
+状态：`[done]`
 
 最近一次自动验证：
 
@@ -16,6 +16,7 @@ FLOW_SMOKE_TEST_OK
 VISUAL_FEEDBACK_SMOKE_TEST_OK
 PLAYABLE_REACHABILITY_SMOKE_TEST_OK
 AUDIO_SAFETY_SMOKE_TEST_OK
+DISPLAY_CONFIG_SMOKE_TEST_OK
 ```
 
 自动验证已确认：
@@ -26,6 +27,7 @@ AUDIO_SAFETY_SMOKE_TEST_OK
 - 真实触发路径下，拍照取景框/快门闪光和显影层会进入可见状态。
 - 玩家进入交互热区后，可通过正常触发路径按顺序完成 A1-A12。
 - 程序化音频的峰值、RMS 和默认播放器音量低于自动安全阈值。
+- 显示配置保持全屏、960x540 设计视口、16:9 比例保护。
 
 最近一次截图检查：
 
@@ -84,6 +86,7 @@ QA_SCREENSHOT_CAPTURE_OK
 - `[pass]` A12 终局显影、对话框和最终画面层次在默认逻辑视口下可见。
 - `[fixed]` 左上测绘表曾在 A2/A12 截图中视觉占比偏大；现已在拍照/显影期间自动弱化，交互结束后恢复。
 - `[partial]` 宽屏比例仍需人工或 OS 级截图确认；当前脚本只能稳定捕获 960x540 逻辑视口。
+- `[pass]` `display_config_smoke_test.gd` 已确认项目启动为全屏，使用 960x540 设计视口，并通过 `window/stretch/aspect="keep"` 保持 16:9 画面比例。
 - `[pending]` 仍需人工实际操作检查 A1-A12 全流程中的 UI 遮挡。
 
 ### 动线与交互
@@ -135,7 +138,12 @@ QA_SCREENSHOT_CAPTURE_OK
 
 ## 问题记录
 
-当前暂无人工手测记录。
+2026-05-06 人工完整手测已通过：
+
+- `[pass]` 使用 `docs/qa/manual-playtest-checklist-v0.1.zh.md` 逐项签收。
+- `[pass]` 未使用 `F6/F7` 完成 A1-A12。
+- `[pass]` UI、交互、表现、音频、文本与情绪检查项全部通过。
+- `[pass]` 未记录 high/medium/low 问题。
 
 后续格式：
 
