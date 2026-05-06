@@ -2,6 +2,8 @@
 
 本文记录 P0.1 完整手动游玩 QA 的结果。自动烟测只能确认流程和关键节点存在，不能替代实际手测中的观感、节奏和遮挡问题。
 
+完整人工手测时使用 `docs/qa/manual-playtest-checklist-v0.1.zh.md` 逐项签收；本文保留自动验证基线、累计结论和问题记录。
+
 ## 当前状态
 
 状态：`[doing]`
@@ -13,6 +15,7 @@ TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
 VISUAL_FEEDBACK_SMOKE_TEST_OK
 PLAYABLE_REACHABILITY_SMOKE_TEST_OK
+AUDIO_SAFETY_SMOKE_TEST_OK
 ```
 
 自动验证已确认：
@@ -22,6 +25,7 @@ PLAYABLE_REACHABILITY_SMOKE_TEST_OK
 - 结尾卡、测绘项、完成纸签、目标文案正常。
 - 真实触发路径下，拍照取景框/快门闪光和显影层会进入可见状态。
 - 玩家进入交互热区后，可通过正常触发路径按顺序完成 A1-A12。
+- 程序化音频的峰值、RMS 和默认播放器音量低于自动安全阈值。
 
 最近一次截图检查：
 
@@ -115,7 +119,8 @@ QA_SCREENSHOT_CAPTURE_OK
 - `[pass]` 自动烟测确认真实触发路径下拍照反馈和显影层会进入可见状态。
 - `[pass]` 截图确认 A2/A12 显影层、A5 拍照取景框和快门闪光能被看见。
 - `[pass]` 自动烟测确认拍照/显影期间测绘表会弱化，避免抢占关键表现注意力。
-- `[pending]` 程序化音频仍需人工听感确认。
+- `[partial]` `audio_safety_smoke_test.gd` 已确认程序化音频峰值、RMS 和默认播放器音量低于安全阈值。
+- `[pending]` 程序化音频仍需人工听感确认，尤其是快门、档案柜、终局音色是否突兀。
 
 ### 文本与情绪
 
