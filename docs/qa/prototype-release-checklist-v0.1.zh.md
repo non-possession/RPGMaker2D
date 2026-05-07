@@ -22,7 +22,10 @@
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/title_screen_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/visual_feedback_smoke_test.gd
-/usr/local/bin/godot --headless --path . --quit-after 5
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/playable_reachability_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/audio_safety_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/display_config_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/settings_menu_smoke_test.gd
 ```
 
 可视截图检查需要图形渲染：
@@ -41,6 +44,10 @@
 TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
 VISUAL_FEEDBACK_SMOKE_TEST_OK
+PLAYABLE_REACHABILITY_SMOKE_TEST_OK
+AUDIO_SAFETY_SMOKE_TEST_OK
+DISPLAY_CONFIG_SMOKE_TEST_OK
+SETTINGS_MENU_SMOKE_TEST_OK
 ```
 
 已覆盖：
@@ -53,6 +60,10 @@ VISUAL_FEEDBACK_SMOKE_TEST_OK
 - flags、测绘项、完成纸签、结尾卡正常。
 - A5/A10/A12 保持拍照反馈事件。
 - 真实触发路径下，拍照取景框/快门闪光和显影层会进入可见状态。
+- 玩家进入交互热区后，可通过正常触发路径按顺序完成 A1-A12。
+- 程序化音频峰值、RMS 和默认音量低于安全阈值。
+- 显示配置保持全屏、960x540 设计视口、`canvas_items` 和 `keep` 比例保护。
+- 设置菜单可开关、可调整主音量，并在打开时锁定玩家和交互输入。
 - 结尾目标收束为“测绘完成。最终照片已保存。”，不再暗示未实现的车辆返回交互。
 
 ## 手动展示路径
@@ -90,9 +101,10 @@ VISUAL_FEEDBACK_SMOKE_TEST_OK
 - 没有人物立绘，只保留了后续添加人物插图的 UI 空间和数据接口方向。
 - 第一版没有主菜单、存档、设置、暂停菜单。
 - 没有正式导出包，本阶段以 Godot 工程运行展示为准。
+- 宽屏/窄屏窗口比例需要按 `docs/qa/display-aspect-checklist-v0.1.zh.md` 做人工签收；脚本截图只能稳定验证 960x540 逻辑视口。
 
 ## 下一轮候选项
 
-- 做一次手动游玩录像/截图检查，专门看 UI 遮挡和全屏适配。
+- 完成 P0.2 人工窗口比例签收。
 - 用真实环境声替换程序化占位音频。
-- 生成或寻找更统一的墙面小物件：奖状、撤并通知、旧校名牌/地图。
+- 准备 macOS 导出构建。

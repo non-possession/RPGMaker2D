@@ -34,6 +34,9 @@ func _run() -> void:
 		_assert(bg_node != null, "generated BG01 node exists when enabled")
 		var anchor_props := main_scene.get_node_or_null("ClassroomRoot/Background/GeneratedModeAnchorProps")
 		_assert(anchor_props != null, "generated mode anchor props exist")
+		_assert(main_scene.get_node_or_null("ClassroomRoot/Background/GeneratedModeAnchorProps/P1AwardAnchor") != null, "P1 award wall anchor exists")
+		_assert(main_scene.get_node_or_null("ClassroomRoot/Background/GeneratedModeAnchorProps/P1ClosureNoticeAnchor") != null, "P1 closure notice wall anchor exists")
+		_assert(main_scene.get_node_or_null("ClassroomRoot/Background/GeneratedModeAnchorProps/P1SchoolPlaqueAnchor") != null, "P1 school plaque wall anchor exists")
 		if FileAccess.file_exists("res://assets/sprites/objects/obj05_paper_plane_broken_pencil.png"):
 			var obj05 := main_scene.get_node_or_null("ClassroomRoot/Background/GeneratedModeAnchorProps/Obj05PaperPlaneBrokenPencil")
 			_assert(obj05 != null, "OBJ05 runtime sprite exists when asset is present")
@@ -94,8 +97,9 @@ func _validate_final_state(game_state: Node, ending_card: Control) -> void:
 		_assert(game_state.has_flag(flag), "flag set: %s" % flag)
 	for item in ["current_photo", "left_items", "wall_items", "structure_damage", "final_photo"]:
 		_assert(game_state.survey_items.get(item, false), "survey item completed: %s" % item)
-	_assert(ending_card.visible, "ending card visible after A12")
-	_assert(Objectives.current_objective(game_state) == "测绘完成。最终照片已保存。", "final objective is closed")
+		_assert(ending_card.visible, "ending card visible after A12")
+		_assert(ending_card.find_child("ReturnTitleButton", true, false) != null, "ending card has return title button")
+		_assert(Objectives.current_objective(game_state) == "测绘完成。最终照片已保存。", "final objective is closed")
 	_assert(Interactions.INTERACTIONS["A5"].get("photo_required", false), "A5 triggers photo feedback")
 	_assert(Interactions.INTERACTIONS["A10"].get("photo_required", false), "A10 triggers photo feedback")
 	_assert(Interactions.INTERACTIONS["A12"].get("photo_required", false), "A12 triggers photo feedback")

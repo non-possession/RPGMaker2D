@@ -190,6 +190,28 @@ VISUAL_FEEDBACK_SMOKE_TEST_OK
 - 旁白和情绪句稍慢，让玩家有一点“被迫停住”的空间。
 - 所有停顿都控制在 1 秒以内，避免第一版原型变成不可跳过演出。
 
+## P1 墙面锚点 v1 记录
+
+已完成 A4/A5/A6 墙面关键物件轻量增强：
+
+- 在生成背景模式下，`GeneratedModeAnchorProps` 会额外绘制三块 Godot 原生墙面锚点：`P1AwardAnchor`、`P1ClosureNoticeAnchor`、`P1SchoolPlaqueAnchor`。
+- 这些锚点只增强奖状、撤并通知、旧校名牌的可见度，不改变 A4/A5/A6 的交互位置、触发顺序、剧情文本或测绘项。
+- `flow_smoke_test.gd` 已检查三块锚点存在，避免后续资产接入时误删。
+
+验证：
+
+```bash
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
+/usr/local/bin/godot --path . --script res://scripts/tools/capture_qa_screenshots.gd
+```
+
+预期：
+
+```text
+FLOW_SMOKE_TEST_OK
+QA_SCREENSHOT_CAPTURE_OK
+```
+
 ## 下一步工程任务
 
 ## CH01 主角小人

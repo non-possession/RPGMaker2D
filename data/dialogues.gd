@@ -79,9 +79,11 @@ const DIALOGUES := {
 	],
 	"a11_girl_memory": [
 		{"speaker_id": "旁白", "portrait_id": "", "text": "抽屉里有一张皱掉的纸。上面写着半句作文题：我的家乡……"},
-		{"speaker_id": "旁白", "portrait_id": "", "text": "他忽然想起{girl}。她以前说起自己的村子，总像在说一件很普通的事。"},
+		{"speaker_id": "旁白", "portrait_id": "", "text": "他想起初中时坐在窗边的{girl}。"},
+		{"speaker_id": "旁白", "portrait_id": "", "text": "她以前说起自己的村子，总像在说一件很普通的事。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "门前的路。夏天的玉米地。下雨以后踩一脚就陷下去的泥。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "她一点也不觉得这些丢人。"},
+		{"speaker_id": "旁白", "portrait_id": "", "text": "好像人可以从很远的地方来，也不用急着把来处藏起来。"},
 		{"speaker_id": "{girl}", "portrait_id": "", "text": "年轻人不谈恋爱是脑子有问题。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "他说得少。不是不知道怎么说。是不想说。"},
 	],

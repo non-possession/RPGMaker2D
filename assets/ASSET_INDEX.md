@@ -24,6 +24,7 @@ This index tracks generated and placeholder assets for the prototype.
 | OBJ06 | `assets/sprites/objects/obj06_archive_father_record.png` | integrated v2 | Archive cabinet, roster, old photo. Roster/photo details softened so the player reads it as evidence, not a text puzzle. |
 | OBJ08 | `assets/sprites/objects/obj08_essay_fragment.png` | integrated v1 | Essay fragment and desk drawer for He Xiaoman memory. |
 | AUDIO-PROC | `scripts/audio_controller.gd` | integrated v1 | Procedural placeholder ambience and SFX: classroom wind, paper record, shutter, memory swell, drawer, final tone. Replace with authored audio later. |
+| WALL-ANCHORS-P1 | `scripts/main.gd` | integrated v1 | Godot-native wall anchor props for A4 award, A5 closure notice, and A6 school plaque in generated-background mode. These clarify interaction targets without changing event order or dialogue. |
 
 ## Placeholder Directories
 

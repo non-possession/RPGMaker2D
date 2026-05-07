@@ -11,6 +11,7 @@
 - 使用方向键或 WASD 移动。
 - 使用 `E` 或 `Enter` 推进对话/触发交互。
 - `Tab` 可展开/收起左上角测绘表；默认只显示当前目标和总进度，减少遮挡。
+- 游戏内非对话/非演出状态下按 `Esc` 可打开设置菜单；设置菜单可调整音量、切换窗口/全屏、返回标题或退出。
 - `F3` 可切换调试 HUD。默认关闭。
 - `F4` 可切换交互区域测试标记。默认关闭。
 - `F5` 重载当前场景。
@@ -32,6 +33,7 @@
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/title_screen_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/visual_feedback_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/settings_menu_smoke_test.gd
 ```
 
 预期输出：
@@ -40,6 +42,7 @@
 TITLE_SCREEN_SMOKE_TEST_OK
 FLOW_SMOKE_TEST_OK
 VISUAL_FEEDBACK_SMOKE_TEST_OK
+SETTINGS_MENU_SMOKE_TEST_OK
 ```
 
 ## 验收流程
@@ -185,6 +188,7 @@ VISUAL_FEEDBACK_SMOKE_TEST_OK
 - 出现最终教室复原显影。
 - 播放结尾文本。
 - 文本结束后显示“测绘完成”收束画面。
+- 结尾卡可通过“返回标题”按钮或 `E/Enter` 回到标题页。
 
 ## 回归检查
 
@@ -195,3 +199,4 @@ VISUAL_FEEDBACK_SMOKE_TEST_OK
 - 交互提示不遮挡文本框。
 - 显影层不遮挡 UI。
 - `F3` 能显示/隐藏调试 HUD。
+- `Esc` 设置菜单能打开和关闭，调整音量后不影响继续推进流程。

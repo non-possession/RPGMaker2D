@@ -2,3 +2,4 @@
 .godot/
 *.tmp
 docs/qa/screenshots/
+builds/

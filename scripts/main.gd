@@ -12,6 +12,7 @@ const DebugHudScript = preload("res://scripts/debug_hud.gd")
 const UiToastScript = preload("res://scripts/ui_toast.gd")
 const EndingCardScript = preload("res://scripts/ending_card.gd")
 const AudioControllerScript = preload("res://scripts/audio_controller.gd")
+const SettingsMenuScript = preload("res://scripts/settings_menu.gd")
 const Interactions = preload("res://data/interactions.gd")
 const Names = preload("res://data/names.gd")
 
@@ -145,6 +146,7 @@ func _create_generated_mode_anchor_props(background: Node2D) -> void:
 	var props := Node2D.new()
 	props.name = "GeneratedModeAnchorProps"
 	background.add_child(props)
+	_create_wall_anchor_props(props)
 	_rect(props, "SurveyClipboard", Vector2(244, 394), Vector2(48, 34), Color(0.72, 0.66, 0.5, 0.92))
 	_rect(props, "SurveyPaper", Vector2(250, 398), Vector2(36, 24), Color(0.84, 0.8, 0.66, 0.92))
 	_chalk_line(props, Vector2(255, 404), Vector2(24, 2), Color(0.28, 0.25, 0.2, 0.6))
@@ -160,6 +162,25 @@ func _create_generated_mode_anchor_props(background: Node2D) -> void:
 	_chalk_line(props, Vector2(760, 82), Vector2(3, 76), Color(0.1, 0.08, 0.06, 0.58))
 	_chalk_line(props, Vector2(753, 118), Vector2(24, 3), Color(0.1, 0.08, 0.06, 0.5))
 	_label(props, "裂缝", Vector2(724, 122), Vector2(46, 20), 11, Color(0.28, 0.22, 0.14, 0.72))
+
+func _create_wall_anchor_props(parent: Node2D) -> void:
+	var award := _rect(parent, "P1AwardAnchor", Vector2(208, 62), Vector2(70, 44), Color(0.72, 0.61, 0.4, 0.9))
+	_rect(award, "AwardInnerPaper", Vector2(5, 5), Vector2(60, 34), Color(0.82, 0.72, 0.48, 0.84))
+	_rect(award, "AwardTape", Vector2(25, -3), Vector2(20, 6), Color(0.9, 0.82, 0.58, 0.72))
+	_label(award, "奖状", Vector2(14, 7), Vector2(42, 16), 11, Color(0.23, 0.14, 0.08, 0.88))
+	_chalk_line(award, Vector2(14, 27), Vector2(42, 2), Color(0.38, 0.18, 0.1, 0.54))
+	_chalk_line(award, Vector2(20, 33), Vector2(30, 2), Color(0.38, 0.18, 0.1, 0.42))
+
+	var notice := _rect(parent, "P1ClosureNoticeAnchor", Vector2(626, 58), Vector2(80, 60), Color(0.74, 0.7, 0.58, 0.9))
+	_rect(notice, "NoticeHeader", Vector2(6, 6), Vector2(68, 7), Color(0.58, 0.17, 0.12, 0.76))
+	_label(notice, "撤并", Vector2(12, 16), Vector2(56, 16), 11, Color(0.18, 0.14, 0.1, 0.9))
+	_label(notice, "通知", Vector2(12, 31), Vector2(56, 16), 11, Color(0.18, 0.14, 0.1, 0.82))
+	_rect(notice, "NoticeSeal", Vector2(58, 42), Vector2(10, 10), Color(0.56, 0.12, 0.1, 0.48))
+
+	var plaque := _rect(parent, "P1SchoolPlaqueAnchor", Vector2(714, 64), Vector2(70, 36), Color(0.2, 0.18, 0.14, 0.92))
+	_rect(plaque, "PlaqueInner", Vector2(5, 5), Vector2(60, 26), Color(0.3, 0.25, 0.17, 0.76))
+	_label(plaque, Names.NAMES["school"], Vector2(8, 8), Vector2(54, 18), 12, Color(0.78, 0.7, 0.48, 0.9))
+	_chalk_line(plaque, Vector2(12, 28), Vector2(44, 2), Color(0.12, 0.1, 0.08, 0.58))
 
 func _create_classroom_collision(collision_root: Node2D, using_generated_background: bool) -> void:
 	_static_rect(collision_root, "NorthBoundary", Vector2(80, 50), Vector2(720, 28))
@@ -334,6 +355,11 @@ func _create_ui_and_controller() -> void:
 	debug_hud.set_script(DebugHudScript)
 	ui.add_child(debug_hud)
 	debug_hud.call("setup", game_state, controller)
+	var settings_menu := Control.new()
+	settings_menu.name = "SettingsMenu"
+	settings_menu.set_script(SettingsMenuScript)
+	ui.add_child(settings_menu)
+	settings_menu.call("setup", player, controller, audio_controller)
 
 func _create_interactables() -> void:
 	var root := Node2D.new()

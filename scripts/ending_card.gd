@@ -1,16 +1,23 @@
 extends Control
 
+const TITLE_SCENE_PATH := "res://scenes/title_screen.tscn"
+
 var panel: Panel
 var title_label: Label
 var body_label: Label
+var return_button: Button
+
+func _process(_delta: float) -> void:
+	if visible and Input.is_action_just_pressed("interact"):
+		_return_to_title()
 
 func _ready() -> void:
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	visible = false
 	modulate.a = 0.0
 	panel = Panel.new()
-	panel.position = Vector2(282, 146)
-	panel.size = Vector2(396, 174)
+	panel.position = Vector2(282, 132)
+	panel.size = Vector2(396, 218)
 	var panel_style := StyleBoxFlat.new()
 	panel_style.bg_color = Color(0.07, 0.062, 0.052, 0.92)
 	panel_style.border_color = Color(0.72, 0.62, 0.44, 0.72)
@@ -43,6 +50,14 @@ func _ready() -> void:
 	body_label.add_theme_color_override("font_color", Color(0.88, 0.84, 0.74))
 	body_label.add_theme_constant_override("line_spacing", 4)
 	panel.add_child(body_label)
+	return_button = Button.new()
+	return_button.name = "ReturnTitleButton"
+	return_button.text = "返回标题"
+	return_button.position = Vector2(122, 166)
+	return_button.size = Vector2(152, 32)
+	return_button.focus_mode = Control.FOCUS_NONE
+	return_button.pressed.connect(_return_to_title)
+	panel.add_child(return_button)
 
 func show_card() -> void:
 	visible = true
@@ -52,3 +67,6 @@ func show_card() -> void:
 	tween.tween_interval(0.15)
 	tween.tween_property(self, "modulate:a", 1.0, 0.45)
 	tween.parallel().tween_property(panel, "scale", Vector2.ONE, 0.45)
+
+func _return_to_title() -> void:
+	get_tree().change_scene_to_file(TITLE_SCENE_PATH)

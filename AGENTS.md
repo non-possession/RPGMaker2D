@@ -20,3 +20,11 @@ This project uses a focused set of Matt Pocock skills to plan and build a Godot 
 - Keep the first playable demo narrow: exploration, atmosphere, a small investigation loop, and one or two representative scripted moments.
 - Prefer Godot-native 2D patterns and small vertical slices over broad infrastructure work.
 - Record durable design decisions in project docs once they affect scene structure, asset pipelines, or narrative interaction rules.
+
+## Godot Testing Rules
+
+- Prefer CLI/headless commands over Computer Use.
+- Do not use Computer Use unless explicitly requested.
+- Do not repeatedly kill Godot processes without asking.
+- Before running Godot GUI, explain why GUI is necessary.
+- Prefer focused tests and minimal reproduction scenes.
