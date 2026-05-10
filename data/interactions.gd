@@ -120,6 +120,7 @@ const INTERACTIONS := {
 		"disabled_prompt": "柜子锈住了，稍后再看。",
 		"set_flags": ["father_record_seen"],
 		"dialogue_id": "a8_father_record",
+		"memory_event_id": "a8_father_record",
 		"overlay_id": "overlay_father_photo",
 		"survey_items": ["left_items"],
 		"photo_required": false,

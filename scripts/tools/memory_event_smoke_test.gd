@@ -31,6 +31,13 @@ func _run() -> void:
 		_assert(not bool(memory_player.get("is_playing")), "memory event clears playing state")
 		await process_frame
 		_assert(memory_player.get_child_count() == 0, "memory event clears fragments")
+		memory_player.call("play_event", "a8_father_record", MemoryEvents.EVENTS["a8_father_record"])
+		await _wait_frames(8)
+		_assert(bool(player.get("input_locked")), "A8 memory event locks player input")
+		_assert(memory_player.get_child_count() >= 4, "A8 memory event spawns layered roster and motorcycle fragments")
+		await memory_player.memory_event_finished
+		await process_frame
+		_assert(not bool(player.get("input_locked")), "A8 memory event restores player input")
 	main_scene.queue_free()
 	await process_frame
 	if failures.is_empty():

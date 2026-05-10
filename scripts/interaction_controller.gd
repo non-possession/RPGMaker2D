@@ -166,6 +166,8 @@ func _show_completion_marker(id: String) -> void:
 
 func _update_runtime_asset_state(id: String) -> void:
 	match id:
+		"A8":
+			_reveal_father_record_assets()
 		"A10":
 			_show_single_runtime_asset(["blackboard_rough", "blackboard_photo", "blackboard_final"], "blackboard_photo")
 		"A12":
@@ -178,6 +180,18 @@ func _show_single_runtime_asset(keys: Array[String], active_key: String) -> void
 		var sprite = runtime_asset_sprites[key]
 		if sprite != null and is_instance_valid(sprite):
 			sprite.visible = key == active_key
+
+func _reveal_father_record_assets() -> void:
+	var archive = runtime_asset_sprites.get("obj06_archive", null)
+	if archive != null and is_instance_valid(archive):
+		var archive_tween := create_tween()
+		archive_tween.tween_property(archive, "modulate", Color(0.86, 0.78, 0.62, 0.96), 0.28)
+	var reveal = runtime_asset_sprites.get("obj06_father_record_reveal", null)
+	if reveal != null and is_instance_valid(reveal):
+		reveal.visible = true
+		reveal.modulate.a = 0.0
+		var tween := create_tween()
+		tween.tween_property(reveal, "modulate:a", 1.0, 0.34)
 
 func _set_cinematic_focus(active: bool) -> void:
 	if survey_progress != null and survey_progress.has_method("set_cinematic_focus"):

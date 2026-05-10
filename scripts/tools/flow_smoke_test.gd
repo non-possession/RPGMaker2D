@@ -65,6 +65,9 @@ func _run() -> void:
 		_assert(marker != null and marker.visible, "%s completion marker visible" % id)
 		if target.data.get("photo_required", false):
 			_assert(target.data.get("prompt", "").contains("拍") or id == "A5", "%s photo event prompt is photo-like" % id)
+		if id == "A8" and main_scene.use_generated_classroom_background:
+			var father_reveal = main_scene.runtime_asset_sprites.get("obj06_father_record_reveal")
+			_assert(father_reveal != null and father_reveal.visible, "father roster reveal visible after A8")
 		if id == "A10" and main_scene.use_generated_blackboard_states:
 			var blackboard_photo = main_scene.runtime_asset_sprites.get("blackboard_photo")
 			_assert(blackboard_photo != null and blackboard_photo.visible, "generated photo blackboard visible after A10")

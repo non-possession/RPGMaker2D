@@ -88,16 +88,16 @@ func _complete_by_playable_trigger(id: String) -> void:
 
 func _advance_dialogue_until_completed(id: String) -> void:
 	var guard := 0
-	while guard < 180 and not dialogue_box.is_playing:
+	while guard < 360 and not dialogue_box.is_playing:
 		await process_frame
 		guard += 1
 	_assert(dialogue_box.is_playing, "%s starts dialogue after trigger" % id)
-	while guard < 260 and dialogue_box.is_playing:
+	while guard < 560 and dialogue_box.is_playing:
 		dialogue_box.advance()
 		await _wait_frames(2)
 		guard += 1
 	await _wait_frames(8)
-	_assert(guard < 260, "%s dialogue completes without timeout" % id)
+	_assert(guard < 560, "%s dialogue completes without timeout" % id)
 
 func _cleanup_scene() -> void:
 	if main_scene == null:

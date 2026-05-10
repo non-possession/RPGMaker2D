@@ -51,6 +51,8 @@ func _run() -> void:
 	_assert(anchor_props.get_node_or_null("Obj06CabinetAttachment/OpenRecordSurface") != null, "father record has cabinet support attachment")
 	_assert(anchor_props.get_node_or_null("Obj05ForegroundBlend/NearDeskLegOccluder") != null, "paper plane has foreground desk-leg occlusion")
 	_assert(anchor_props.get_node_or_null("Obj06CabinetForeground/CabinetLowerLip") != null, "father record has cabinet foreground occlusion")
+	_assert(anchor_props.get_node_or_null("Obj06FatherRecordReveal/RosterPaper") != null, "father record reveal exists for A8")
+	_assert(not anchor_props.get_node("Obj06FatherRecordReveal").visible, "father record reveal starts hidden")
 	_assert(anchor_props.get_node_or_null("Obj08DeskForeground/FrontEdgeOccluder") != null, "essay fragment has desk foreground occlusion")
 	for sprite_name in ["Obj05PaperPlaneBrokenPencil", "Obj06ArchiveFatherRecord", "Obj08EssayFragment"]:
 		var sprite: Sprite2D = anchor_props.get_node_or_null(sprite_name)

@@ -169,8 +169,11 @@ func _create_generated_mode_anchor_props(background: Node2D) -> void:
 		_label(props, "纸飞机", Vector2(130, 362), Vector2(64, 20), 11, Color(0.78, 0.72, 0.56, 0.78))
 	_create_prop_foreground(props, "Obj05ForegroundBlend", Vector2(126, 330), Vector2(86, 44), "floor")
 	_create_prop_attachment(props, "Obj06CabinetAttachment", Vector2(86, 178), Vector2(112, 44), Color(0.06, 0.055, 0.05, 0.2), "cabinet")
-	_try_add_object_sprite(props, OBJ06_PATH, "Obj06ArchiveFatherRecord", Vector2(142, 160), Color(0.68, 0.64, 0.56, 0.78))
+	var obj06 := _try_add_object_sprite(props, OBJ06_PATH, "Obj06ArchiveFatherRecord", Vector2(142, 160), Color(0.68, 0.64, 0.56, 0.78))
+	if obj06 != null:
+		runtime_asset_sprites["obj06_archive"] = obj06
 	_create_prop_foreground(props, "Obj06CabinetForeground", Vector2(86, 178), Vector2(112, 44), "cabinet")
+	runtime_asset_sprites["obj06_father_record_reveal"] = _create_father_record_reveal(props)
 	_create_prop_attachment(props, "Obj08DeskAttachment", Vector2(352, 254), Vector2(116, 54), Color(0.12, 0.08, 0.045, 0.24), "desk")
 	var obj08 := _try_add_object_sprite(props, OBJ08_PATH, "Obj08EssayFragment", Vector2(410, 282), Color(0.58, 0.52, 0.44, 0.66))
 	if obj08 == null:
@@ -237,6 +240,23 @@ func _create_prop_foreground(parent: Node2D, node_name: String, position: Vector
 		"floor":
 			_rect(root, "FloorDustOverProp", Vector2(20, size.y - 11), Vector2(size.x - 26, 3), Color(0.72, 0.68, 0.52, 0.2))
 			_rect(root, "NearDeskLegOccluder", Vector2(8, 0), Vector2(7, size.y - 5), Color(0.09, 0.055, 0.035, 0.55))
+	return root
+
+func _create_father_record_reveal(parent: Node2D) -> Node2D:
+	var root := Node2D.new()
+	root.name = "Obj06FatherRecordReveal"
+	root.position = Vector2(104, 132)
+	root.visible = false
+	root.modulate.a = 0.0
+	parent.add_child(root)
+	_rect(root, "RosterPaper", Vector2(0, 0), Vector2(128, 82), Color(0.72, 0.62, 0.43, 0.72))
+	_rect(root, "OldPhoto", Vector2(78, 12), Vector2(38, 28), Color(0.38, 0.28, 0.18, 0.62))
+	_rect(root, "PhotoFaceHint", Vector2(91, 19), Vector2(9, 10), Color(0.82, 0.68, 0.48, 0.5))
+	_label(root, "学生姓名：老李", Vector2(10, 8), Vector2(74, 16), 10, Color(0.18, 0.12, 0.07, 0.86))
+	_label(root, "借读时间：一年", Vector2(10, 25), Vector2(76, 16), 10, Color(0.18, 0.12, 0.07, 0.78))
+	_label(root, "升学去向：", Vector2(10, 42), Vector2(66, 16), 10, Color(0.18, 0.12, 0.07, 0.68))
+	_label(root, "转出记录：缺页", Vector2(10, 59), Vector2(82, 16), 10, Color(0.18, 0.12, 0.07, 0.74))
+	_chalk_line(root, Vector2(74, 50), Vector2(28, 2), Color(0.18, 0.12, 0.07, 0.24))
 	return root
 
 func _create_classroom_collision(collision_root: Node2D, using_generated_background: bool) -> void:
