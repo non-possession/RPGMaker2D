@@ -49,6 +49,14 @@ func _run() -> void:
 	_assert(anchor_props.get_node_or_null("Obj08DeskAttachment/DrawerLip") != null, "essay fragment has drawer lip attachment")
 	_assert(anchor_props.get_node_or_null("Obj05GroundAttachment/DeskLegHint") != null, "paper plane has desk leg attachment")
 	_assert(anchor_props.get_node_or_null("Obj06CabinetAttachment/OpenRecordSurface") != null, "father record has cabinet support attachment")
+	_assert(anchor_props.get_node_or_null("Obj05ForegroundBlend/NearDeskLegOccluder") != null, "paper plane has foreground desk-leg occlusion")
+	_assert(anchor_props.get_node_or_null("Obj06CabinetForeground/CabinetLowerLip") != null, "father record has cabinet foreground occlusion")
+	_assert(anchor_props.get_node_or_null("Obj08DeskForeground/FrontEdgeOccluder") != null, "essay fragment has desk foreground occlusion")
+	for sprite_name in ["Obj05PaperPlaneBrokenPencil", "Obj06ArchiveFatherRecord", "Obj08EssayFragment"]:
+		var sprite: Sprite2D = anchor_props.get_node_or_null(sprite_name)
+		if sprite != null:
+			_assert(sprite.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, "%s uses nearest texture filtering" % sprite_name)
+			_assert(sprite.modulate.a < 1.0, "%s is blended into the scene instead of full-contrast pasted" % sprite_name)
 	main_scene.queue_free()
 	await process_frame
 	if failures.is_empty():

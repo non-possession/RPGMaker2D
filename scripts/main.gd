@@ -162,15 +162,20 @@ func _create_generated_mode_anchor_props(background: Node2D) -> void:
 	_chalk_line(props, Vector2(255, 411), Vector2(20, 2), Color(0.28, 0.25, 0.2, 0.45))
 	_label(props, "测绘表", Vector2(238, 430), Vector2(64, 18), 11, Color(0.82, 0.72, 0.52, 0.86))
 	_create_prop_attachment(props, "Obj05GroundAttachment", Vector2(126, 330), Vector2(86, 44), Color(0.08, 0.07, 0.055, 0.22), "floor")
-	if not _try_add_object_sprite(props, OBJ05_PATH, "Obj05PaperPlaneBrokenPencil", Vector2(168, 350)):
+	var obj05 := _try_add_object_sprite(props, OBJ05_PATH, "Obj05PaperPlaneBrokenPencil", Vector2(168, 350), Color(0.72, 0.68, 0.58, 0.78))
+	if obj05 == null:
 		_rect(props, "AnchorPaperPlane", Vector2(142, 342), Vector2(44, 18), Color(0.74, 0.72, 0.64, 0.86))
 		_label(props, "纸飞机", Vector2(130, 362), Vector2(64, 20), 11, Color(0.78, 0.72, 0.56, 0.78))
+	_create_prop_foreground(props, "Obj05ForegroundBlend", Vector2(126, 330), Vector2(86, 44), "floor")
 	_create_prop_attachment(props, "Obj06CabinetAttachment", Vector2(86, 178), Vector2(112, 44), Color(0.06, 0.055, 0.05, 0.2), "cabinet")
-	_try_add_object_sprite(props, OBJ06_PATH, "Obj06ArchiveFatherRecord", Vector2(142, 160))
+	_try_add_object_sprite(props, OBJ06_PATH, "Obj06ArchiveFatherRecord", Vector2(142, 160), Color(0.68, 0.64, 0.56, 0.78))
+	_create_prop_foreground(props, "Obj06CabinetForeground", Vector2(86, 178), Vector2(112, 44), "cabinet")
 	_create_prop_attachment(props, "Obj08DeskAttachment", Vector2(352, 254), Vector2(116, 54), Color(0.12, 0.08, 0.045, 0.24), "desk")
-	if not _try_add_object_sprite(props, OBJ08_PATH, "Obj08EssayFragment", Vector2(410, 282)):
+	var obj08 := _try_add_object_sprite(props, OBJ08_PATH, "Obj08EssayFragment", Vector2(410, 282), Color(0.58, 0.52, 0.44, 0.66))
+	if obj08 == null:
 		_rect(props, "AnchorEssayFragment", Vector2(374, 268), Vector2(46, 28), Color(0.72, 0.66, 0.52, 0.82))
 		_label(props, "作文本", Vector2(366, 296), Vector2(62, 18), 11, Color(0.78, 0.72, 0.56, 0.78))
+	_create_prop_foreground(props, "Obj08DeskForeground", Vector2(352, 254), Vector2(116, 54), "desk")
 	_chalk_line(props, Vector2(760, 82), Vector2(3, 76), Color(0.1, 0.08, 0.06, 0.58))
 	_chalk_line(props, Vector2(753, 118), Vector2(24, 3), Color(0.1, 0.08, 0.06, 0.5))
 	_label(props, "裂缝", Vector2(724, 122), Vector2(46, 20), 11, Color(0.28, 0.22, 0.14, 0.72))
@@ -212,6 +217,25 @@ func _create_prop_attachment(parent: Node2D, node_name: String, position: Vector
 		"floor":
 			_rect(root, "DeskLegHint", Vector2(8, 0), Vector2(8, size.y - 6), Color(0.16, 0.1, 0.065, 0.45))
 			_rect(root, "FloorDust", Vector2(20, size.y - 14), Vector2(size.x - 28, 4), Color(0.7, 0.66, 0.52, 0.18))
+	return root
+
+func _create_prop_foreground(parent: Node2D, node_name: String, position: Vector2, size: Vector2, kind: String) -> Node2D:
+	var root := Node2D.new()
+	root.name = node_name
+	root.position = position
+	parent.add_child(root)
+	match kind:
+		"desk":
+			_rect(root, "FrontEdgeOccluder", Vector2(6, size.y - 19), Vector2(size.x - 12, 10), Color(0.18, 0.105, 0.055, 0.78))
+			_rect(root, "DrawerMouthShadow", Vector2(18, size.y - 12), Vector2(size.x - 36, 5), Color(0.055, 0.035, 0.025, 0.58))
+			_chalk_line(root, Vector2(10, size.y - 22), Vector2(size.x - 20, 2), Color(0.58, 0.38, 0.18, 0.45))
+		"cabinet":
+			_rect(root, "CabinetLowerLip", Vector2(18, size.y - 12), Vector2(size.x - 34, 8), Color(0.07, 0.06, 0.05, 0.58))
+			_rect(root, "CabinetLeftEdgeOccluder", Vector2(10, 6), Vector2(8, size.y - 10), Color(0.09, 0.08, 0.07, 0.42))
+			_rect(root, "CabinetRightEdgeOccluder", Vector2(size.x - 18, 6), Vector2(8, size.y - 10), Color(0.09, 0.08, 0.07, 0.38))
+		"floor":
+			_rect(root, "FloorDustOverProp", Vector2(20, size.y - 11), Vector2(size.x - 26, 3), Color(0.72, 0.68, 0.52, 0.2))
+			_rect(root, "NearDeskLegOccluder", Vector2(8, 0), Vector2(7, size.y - 5), Color(0.09, 0.055, 0.035, 0.55))
 	return root
 
 func _create_classroom_collision(collision_root: Node2D, using_generated_background: bool) -> void:
@@ -275,15 +299,17 @@ func _try_add_generated_blackboard_state(parent: Node2D, path: String, sprite_na
 	parent.add_child(sprite)
 	return sprite
 
-func _try_add_object_sprite(parent: Node2D, path: String, sprite_name: String, position: Vector2) -> bool:
+func _try_add_object_sprite(parent: Node2D, path: String, sprite_name: String, position: Vector2, modulate_color := Color.WHITE) -> Sprite2D:
 	if not _asset_file_exists(path):
-		return false
+		return null
 	var sprite := Sprite2D.new()
 	sprite.name = sprite_name
 	sprite.texture = load(path)
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	sprite.position = position
+	sprite.modulate = modulate_color
 	parent.add_child(sprite)
-	return true
+	return sprite
 
 func _create_atmosphere(parent: Node2D) -> void:
 	var atmosphere := Node2D.new()
