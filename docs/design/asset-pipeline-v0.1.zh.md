@@ -115,6 +115,7 @@ assets/sprites/portraits/
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/flow_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/first_space_scale_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/player_motion_visual_smoke_test.gd
+/usr/local/bin/godot --headless --path . --script res://scripts/tools/memory_event_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/portrait_config_smoke_test.gd
 /usr/local/bin/godot --headless --path . --script res://scripts/tools/asset_pipeline_smoke_test.gd
 ```
@@ -125,6 +126,7 @@ assets/sprites/portraits/
 FLOW_SMOKE_TEST_OK
 FIRST_SPACE_SCALE_SMOKE_TEST_OK
 PLAYER_MOTION_VISUAL_SMOKE_TEST_OK
+MEMORY_EVENT_SMOKE_TEST_OK
 PORTRAIT_CONFIG_SMOKE_TEST_OK
 ASSET_PIPELINE_SMOKE_TEST_OK
 ```

@@ -15,8 +15,11 @@ func _run() -> void:
 		"res://docs/design/asset-production-brief-v0.1.zh.md",
 		"res://assets/ASSET_INDEX.md",
 		"res://data/portraits.gd",
+		"res://data/memory_events.gd",
+		"res://scripts/memory_event_player.gd",
 		"res://scripts/tools/first_space_scale_smoke_test.gd",
 		"res://scripts/tools/player_motion_visual_smoke_test.gd",
+		"res://scripts/tools/memory_event_smoke_test.gd",
 	]:
 		_assert(FileAccess.file_exists(path), "%s exists" % path)
 	for path in [
@@ -44,7 +47,7 @@ func _run() -> void:
 	for token in ["BG01", "BG03", "OBJ02-A", "OBJ02-B", "OBJ02-C", "CH01", "ch01_surveyor_player_sheet_v02.png", "OBJ05", "OBJ06", "OBJ08", "PORTRAIT-CONFIG", "AUDIO-PROC", "Player standing height", "Single desk", "Double desk"]:
 		_assert(index_text.contains(token), "asset index tracks %s" % token)
 	var pipeline_text := FileAccess.get_file_as_string("res://docs/design/asset-pipeline-v0.1.zh.md")
-	for token in ["data/portraits.gd", "assets/audio/source/", "scripts/tools/audio_safety_smoke_test.gd", "first_space_scale_smoke_test.gd", "player_motion_visual_smoke_test.gd", "56px", "72x42px", "112x44px", "80-96px"]:
+	for token in ["data/portraits.gd", "assets/audio/source/", "scripts/tools/audio_safety_smoke_test.gd", "first_space_scale_smoke_test.gd", "player_motion_visual_smoke_test.gd", "memory_event_smoke_test.gd", "56px", "72x42px", "112x44px", "80-96px"]:
 		_assert(pipeline_text.contains(token), "asset pipeline documents %s" % token)
 	var scale_text := FileAccess.get_file_as_string("res://docs/design/first-space-scale-v0.2.zh.md")
 	for token in ["960x540", "56px", "72x42px", "112x44px", "64px", "80-96px", "脚底 pivot", "可控分层", "入口建立整体感", "视觉显著性", "场景内显影"]:

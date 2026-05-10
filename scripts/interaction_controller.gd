@@ -1,10 +1,13 @@
 extends Node
 
+const MemoryEvents = preload("res://data/memory_events.gd")
+
 var game_state: Node
 var dialogue_box: Control
 var interaction_prompt: Control
 var survey_progress: Control
 var photo_flash: Control
+var memory_event_player: Control
 var ui_toast: Control
 var ending_card: Control
 var audio_controller: Node
@@ -23,6 +26,7 @@ func setup(deps: Dictionary) -> void:
 	interaction_prompt = deps["interaction_prompt"]
 	survey_progress = deps["survey_progress"]
 	photo_flash = deps["photo_flash"]
+	memory_event_player = deps.get("memory_event_player", null)
 	ui_toast = deps["ui_toast"]
 	ending_card = deps["ending_card"]
 	audio_controller = deps.get("audio_controller", null)
@@ -87,6 +91,7 @@ func _run_interaction_sequence(data: Dictionary) -> void:
 		await get_tree().create_timer(0.58).timeout
 	else:
 		await get_tree().create_timer(_pre_dialogue_pause(data)).timeout
+	await _play_memory_event(str(data.get("memory_event_id", "")))
 	_play_overlay(overlay_id)
 	if not overlay_id.is_empty():
 		await get_tree().create_timer(0.16).timeout
@@ -100,6 +105,14 @@ func _pre_dialogue_pause(data: Dictionary) -> float:
 			return 0.42
 		_:
 			return 0.08
+
+func _play_memory_event(memory_event_id: String) -> void:
+	if memory_event_id.is_empty() or memory_event_player == null:
+		return
+	if not MemoryEvents.EVENTS.has(memory_event_id):
+		return
+	memory_event_player.call("play_event", memory_event_id, MemoryEvents.EVENTS[memory_event_id], {"manage_input": false})
+	await memory_event_player.memory_event_finished
 
 func _finish_interaction(dialogue_id: String) -> void:
 	for item in nearby:

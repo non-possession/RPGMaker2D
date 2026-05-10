@@ -7,6 +7,7 @@ const SurveyScene = preload("res://scenes/ui/survey_progress.tscn")
 const InteractableScript = preload("res://scripts/interactable.gd")
 const GameStateScript = preload("res://scripts/game_state.gd")
 const InteractionControllerScript = preload("res://scripts/interaction_controller.gd")
+const MemoryEventPlayerScript = preload("res://scripts/memory_event_player.gd")
 const PhotoFlashScript = preload("res://scripts/photo_flash.gd")
 const DebugHudScript = preload("res://scripts/debug_hud.gd")
 const UiToastScript = preload("res://scripts/ui_toast.gd")
@@ -383,6 +384,10 @@ func _create_ui_and_controller() -> void:
 	ui.add_child(prompt)
 	var survey = SurveyScene.instantiate()
 	ui.add_child(survey)
+	var memory_event_player := Control.new()
+	memory_event_player.name = "MemoryEventPlayer"
+	memory_event_player.set_script(MemoryEventPlayerScript)
+	ui.add_child(memory_event_player)
 	var flash := Control.new()
 	flash.name = "PhotoFlash"
 	flash.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -408,6 +413,7 @@ func _create_ui_and_controller() -> void:
 		"interaction_prompt": prompt,
 		"survey_progress": survey,
 		"photo_flash": flash,
+		"memory_event_player": memory_event_player,
 		"ui_toast": toast,
 		"ending_card": ending_card,
 		"player": player,
@@ -428,6 +434,10 @@ func _create_ui_and_controller() -> void:
 	settings_menu.set_script(SettingsMenuScript)
 	ui.add_child(settings_menu)
 	settings_menu.call("setup", player, controller, audio_controller)
+	memory_event_player.call("setup", {
+		"survey_progress": survey,
+		"player": player,
+	})
 
 func _create_interactables() -> void:
 	var root := Node2D.new()
