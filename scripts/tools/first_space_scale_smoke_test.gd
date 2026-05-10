@@ -22,8 +22,8 @@ func _run() -> void:
 	if generated_sprite != null:
 		_assert(not generated_sprite.centered, "generated player sprite uses foot-pivot top-left drawing")
 		var visual_scale: float = float(generated_sprite.scale.y)
-		_assert(absf(54.0 * visual_scale - 56.0) < 0.01, "generated player visible pixels scale to 56px")
-		_assert(absf(generated_sprite.position.y + 59.0 * visual_scale) < 0.01, "generated player visible feet align to player origin")
+		_assert(absf(56.0 * visual_scale - 56.0) < 0.01, "generated player visible pixels scale to 56px")
+		_assert(absf(generated_sprite.position.y + 61.0 * visual_scale) < 0.01, "generated player visible feet align to player origin")
 		_assert(absf(generated_sprite.position.x + 24.0 * visual_scale) < 0.01, "generated player visible center aligns to player origin")
 	for name in [
 		"GeneratedBlackboardCollision",

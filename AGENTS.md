@@ -28,3 +28,9 @@ This project uses a focused set of Matt Pocock skills to plan and build a Godot 
 - Do not repeatedly kill Godot processes without asking.
 - Before running Godot GUI, explain why GUI is necessary.
 - Prefer focused tests and minimal reproduction scenes.
+
+## Git Rules
+
+- For commit tasks, only inspect git status and diff summary unless asked to review full diff.
+- Do not run tests, benchmarks, Computer Use, or broad project scans for simple commit-message tasks.
+- If the user asks only to commit changes, perform the minimal git workflow.

@@ -34,13 +34,14 @@ func _run() -> void:
 		"res://assets/sprites/classroom/obj02_blackboard_state_photo.png",
 		"res://assets/sprites/classroom/obj02_blackboard_state_final.png",
 		"res://assets/sprites/characters/ch01_surveyor_player_sheet.png",
+		"res://assets/sprites/characters/ch01_surveyor_player_sheet_v02.png",
 		"res://assets/sprites/objects/obj05_paper_plane_broken_pencil.png",
 		"res://assets/sprites/objects/obj06_archive_father_record.png",
 		"res://assets/sprites/objects/obj08_essay_fragment.png",
 	]:
 		_assert(FileAccess.file_exists(path), "%s runtime asset exists" % path)
 	var index_text := FileAccess.get_file_as_string("res://assets/ASSET_INDEX.md")
-	for token in ["BG01", "BG03", "OBJ02-A", "OBJ02-B", "OBJ02-C", "CH01", "OBJ05", "OBJ06", "OBJ08", "PORTRAIT-CONFIG", "AUDIO-PROC", "Player standing height", "Single desk", "Double desk"]:
+	for token in ["BG01", "BG03", "OBJ02-A", "OBJ02-B", "OBJ02-C", "CH01", "ch01_surveyor_player_sheet_v02.png", "OBJ05", "OBJ06", "OBJ08", "PORTRAIT-CONFIG", "AUDIO-PROC", "Player standing height", "Single desk", "Double desk"]:
 		_assert(index_text.contains(token), "asset index tracks %s" % token)
 	var pipeline_text := FileAccess.get_file_as_string("res://docs/design/asset-pipeline-v0.1.zh.md")
 	for token in ["data/portraits.gd", "assets/audio/source/", "scripts/tools/audio_safety_smoke_test.gd", "first_space_scale_smoke_test.gd", "player_motion_visual_smoke_test.gd", "56px", "72x42px", "112x44px", "80-96px"]:
