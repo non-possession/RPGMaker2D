@@ -11,7 +11,7 @@
 
 ## 当前阶段
 
-当前目标：把 v0.1 从“内部可展示原型”推进到“可稳定展示、可手动验收、后续可扩展”的小发布前状态。
+当前目标：v0.1 已进入可展示收口状态；下一步启动 v0.2 剧情/玩法扩展规划。
 
 最新基线：
 
@@ -24,6 +24,9 @@
 - P1.1 墙面关键物件轻量增强已完成。
 - P1.2 A11 何小满线索轻量加强已完成。
 - P2.1 最小设置菜单已完成。
+- P2.2 macOS 导出构建与 GUI 人工验收已完成。
+- P3.1 人物插图预留接口已完成。
+- P3.2 资产生成流程标准化已完成。
 
 ## P0：先保证原型可稳定展示
 
@@ -210,9 +213,9 @@
 - 已成功导出 `builds/mac/TheLastClassroom.app`。
 - 已用显式 `--log-file` 对导出二进制完成 headless smoke 检查。
 
-剩余手动验收：
+人工验收：
 
-- GUI 打开 `.app` 后完整跑通 A1-A12。
+- 2026-05-10 用户已 GUI 打开 `.app` 并完整验收通过，确认和工程启动后的效果一致。
 
 ### P2.3 标题页/结尾页轻微打磨
 
@@ -236,7 +239,7 @@
 
 ### P3.1 人物插图预留接口落地
 
-状态：`[todo]`
+状态：`[done]`
 
 目标：
 
@@ -248,9 +251,16 @@
 - 小李、老李、何小满、母亲可以在数据中配置 portrait id。
 - 没有 portrait 时保持当前文本体验。
 
+已完成：
+
+- 新增 `data/portraits.gd`，集中配置小李、老李、母亲、何小满的 portrait id、fallback 字和色调。
+- 对话框已支持 portrait texture 路径；正式图为空时显示 fallback，不影响现有文本体验。
+- A1/A8/A11/A12 的人物台词已挂接 portrait id。
+- 新增 `scripts/tools/portrait_config_smoke_test.gd`，验证 portrait 配置、空 portrait 隐藏、fallback 显示。
+
 ### P3.2 资产生成流程标准化
 
-状态：`[todo]`
+状态：`[done]`
 
 目标：
 
@@ -260,9 +270,15 @@
 
 - 后续新资产能按同一流程从生成到接入。
 
+已完成：
+
+- 新增 `docs/design/asset-pipeline-v0.1.zh.md`，固化原图、运行时资产、接入说明、索引、验收命令和音频许可记录方式。
+- `assets/ASSET_INDEX.md` 已补充 pipeline 文档和 portrait 配置条目。
+- 新增 `scripts/tools/asset_pipeline_smoke_test.gd`，验证核心文档、目录、运行时资产和索引条目。
+
 ### P3.3 v0.2 剧情/玩法扩展规划
 
-状态：`[todo]`
+状态：`[doing]`
 
 目标：
 
@@ -271,3 +287,10 @@
 验收：
 
 - 在 v0.1 展示稳定后再启动，不抢当前封版工作。
+
+当前进度：
+
+- v0.1 封版前收尾项已完成；下一步可以正式进入 v0.2 剧情/玩法扩展规划。
+- 已新增 `docs/design/v0.2-direction.zh.md`，记录 v0.2 高层方向、父亲线、何小满线和 A12-final 边界。
+- 已新增 `docs/design/first-space-scale-v0.2.zh.md`，记录第一空间分层、比例、碰撞和道具贴合规则。
+- 已新增 `docs/roadmap/v0.2-implementation-slices.zh.md`，把 v0.2 拆成空间重构、回忆事件基础系统、A8、A11、A12-final 五个实现切片。

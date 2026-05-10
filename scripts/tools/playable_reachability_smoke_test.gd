@@ -68,7 +68,7 @@ func _complete_by_playable_trigger(id: String) -> void:
 		return
 	_assert(Objectives.current_objective(game_state) == EXPECTED_OBJECTIVES[id], "%s objective points to current task" % id)
 	_assert(game_state.can_interact(target.data), "%s is open before playable trigger" % id)
-	player.global_position = target.global_position
+	player.global_position = target.data.get("approach_position", target.global_position)
 	await _wait_physics_frames(8)
 	await _wait_frames(2)
 	var current = controller.call("_current_interactable")

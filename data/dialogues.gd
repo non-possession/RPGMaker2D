@@ -12,8 +12,8 @@ const DIALOGUES := {
 	"a1_survey_form": [
 		{"speaker_id": "系统", "portrait_id": "", "text": "测绘记录表已展开。"},
 		{"speaker_id": "系统", "portrait_id": "", "text": "任务：拍摄现状照片，标记结构损坏，登记遗留物。"},
-		{"speaker_id": "{protagonist}", "portrait_id": "", "text": "先把该拍的拍完。"},
-		{"speaker_id": "{protagonist}", "portrait_id": "", "text": "别漏项就行。"},
+		{"speaker_id": "{protagonist}", "portrait_id": "protagonist", "text": "先把该拍的拍完。"},
+		{"speaker_id": "{protagonist}", "portrait_id": "protagonist", "text": "别漏项就行。"},
 	],
 	"a2_blackboard_surface": [
 		{"speaker_id": "系统", "portrait_id": "", "text": "黑板西侧，粉笔残留。需拍照记录。"},
@@ -59,8 +59,8 @@ const DIALOGUES := {
 		{"speaker_id": "旁白", "portrait_id": "", "text": "他本来只是想确认是否需要移交。然后他看见了一个名字。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "{father}。借读时间：一年。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "登记册下面压着一张旧照片。十几岁的父亲站在第二排。头发很短，校服宽大，眼睛却很亮。"},
-		{"speaker_id": "母亲", "portrait_id": "", "text": "你以前不是在 {school} 借读过吗？"},
-		{"speaker_id": "{father}", "portrait_id": "", "text": "嗯。没发挥出来就是没发挥出来。人这辈子，很多事也不是想怎样就怎样。"},
+		{"speaker_id": "母亲", "portrait_id": "mother", "text": "你以前不是在 {school} 借读过吗？"},
+		{"speaker_id": "{father}", "portrait_id": "father", "text": "嗯。没发挥出来就是没发挥出来。人这辈子，很多事也不是想怎样就怎样。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "他一直怕自己也会这样。怕有一天，也把“没办法”说得这么自然。"},
 	],
 	"a9_window_crack": [
@@ -84,14 +84,14 @@ const DIALOGUES := {
 		{"speaker_id": "旁白", "portrait_id": "", "text": "门前的路。夏天的玉米地。下雨以后踩一脚就陷下去的泥。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "她一点也不觉得这些丢人。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "好像人可以从很远的地方来，也不用急着把来处藏起来。"},
-		{"speaker_id": "{girl}", "portrait_id": "", "text": "年轻人不谈恋爱是脑子有问题。"},
+		{"speaker_id": "{girl}", "portrait_id": "girl", "text": "年轻人不谈恋爱是脑子有问题。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "他说得少。不是不知道怎么说。是不想说。"},
 	],
 	"a12_final_photo": [
 		{"speaker_id": "系统", "portrait_id": "", "text": "测绘记录已完成。请拍摄教室最终现状照片。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "快门声。照片里，教室安静地亮了一下。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "桌椅像从来没有乱过。黑板上的字还没被擦掉。窗外的风吹进来，有粉笔灰在光里浮着。"},
-		{"speaker_id": "{girl}", "portrait_id": "", "text": "你就是想太多。"},
+		{"speaker_id": "{girl}", "portrait_id": "girl", "text": "你就是想太多。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "那句话已经过去很多年了。但它没有坏。"},
 		{"speaker_id": "旁白", "portrait_id": "", "text": "他在通讯录里停了一会儿。{girl}。屏幕暗下去之前，他没有拨出去。"},
 		{"speaker_id": "系统", "portrait_id": "", "text": "最终照片已保存。文件名：{place}_{school}旧址_最终记录.jpg"},

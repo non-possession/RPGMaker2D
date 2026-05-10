@@ -278,6 +278,6 @@ func _find_interactable_by_id(id: String) -> Area2D:
 	return null
 
 func _teleport_player_near(target: Area2D) -> void:
-	player.global_position = target.global_position + Vector2(0, 52)
+	player.global_position = target.data.get("approach_position", target.global_position)
 	nearby.clear()
 	_update_prompt()

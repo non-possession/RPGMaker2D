@@ -42,7 +42,7 @@ mkdir -p builds/mac
 ## 当前状态
 
 - 日期：2026-05-07
-- 结论：macOS debug `.app` 已成功导出；导出包 GUI 人工完整流程验收待运行。
+- 结论：macOS debug `.app` 已成功导出；导出包 GUI 人工完整流程验收已通过。
 
 已完成：
 
@@ -51,6 +51,7 @@ mkdir -p builds/mac
 - 已启用 `textures/vram_compression/import_etc2_astc=true`，解决 universal/arm64 导出的 ETC2/ASTC 配置错误。
 - 导出前 `TITLE_SCREEN_SMOKE_TEST_OK` 和 `SETTINGS_MENU_SMOKE_TEST_OK` 已通过。
 - 用户已安装 Godot 4.6.2.stable 导出模板，`macos.zip` 已在 Godot 期望路径中。
+- 2026-05-10 用户已完成 `.app` GUI 人工验收，确认效果与工程内启动一致。
 
 导出尝试结果：
 
@@ -81,9 +82,9 @@ exit code 0
 ## 验收
 
 - [x] `.app` 能生成。
-- [ ] `.app` 能从标题页进入。
-- [ ] `.app` 能完成 A1-A12。
-- [ ] 设置菜单可调音量、切换窗口/全屏、返回标题或退出。
+- [x] `.app` 能从标题页进入。
+- [x] `.app` 能完成 A1-A12。
+- [x] 设置菜单可调音量、切换窗口/全屏、返回标题或退出。
 
 ## 问题记录
 

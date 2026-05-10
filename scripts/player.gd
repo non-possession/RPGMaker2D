@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 const PLAYER_SHEET_PATH := "res://assets/sprites/characters/ch01_surveyor_player_sheet.png"
+const TARGET_VISUAL_HEIGHT := 56.0
+const GENERATED_VISIBLE_HEIGHT := 54.0
+const GENERATED_VISIBLE_BOTTOM_Y := 59.0
+const GENERATED_VISIBLE_CENTER_X := 24.0
 
 @export var speed := 110.0
 @export var generated_sprite_hframes := 3
@@ -8,6 +12,7 @@ const PLAYER_SHEET_PATH := "res://assets/sprites/characters/ch01_surveyor_player
 
 var input_locked := false
 var walk_time := 0.0
+var visual_height_px := TARGET_VISUAL_HEIGHT
 var generated_sprite: Sprite2D
 var using_generated_sprite := false
 var last_direction := Vector2.DOWN
@@ -68,7 +73,14 @@ func _try_use_generated_sprite() -> void:
 	generated_sprite.texture = texture
 	generated_sprite.hframes = generated_sprite_hframes
 	generated_sprite.vframes = generated_sprite_vframes
-	generated_sprite.position = Vector2(0, -2)
+	var frame_size := Vector2(
+		float(texture.get_width()) / float(generated_sprite_hframes),
+		float(texture.get_height()) / float(generated_sprite_vframes)
+	)
+	var visual_scale := TARGET_VISUAL_HEIGHT / GENERATED_VISIBLE_HEIGHT
+	generated_sprite.centered = false
+	generated_sprite.scale = Vector2(visual_scale, visual_scale)
+	generated_sprite.position = Vector2(-GENERATED_VISIBLE_CENTER_X * visual_scale, -GENERATED_VISIBLE_BOTTOM_Y * visual_scale)
 	add_child(generated_sprite)
 	move_child(generated_sprite, 1)
 	for node_name in ["Body", "Head", "Hair", "Bag", "LeftFoot", "RightFoot"]:

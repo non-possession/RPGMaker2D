@@ -1,11 +1,14 @@
 extends Control
 
 const Dialogues = preload("res://data/dialogues.gd")
+const Portraits = preload("res://data/portraits.gd")
 
 signal dialogue_finished(dialogue_id: String)
 
 var panel: Panel
 var portrait_panel: Panel
+var portrait_texture: TextureRect
+var portrait_fallback: ColorRect
 var portrait_label: Label
 var speaker_label: Label
 var text_label: Label
@@ -21,6 +24,7 @@ var panel_tween: Tween
 func _ready() -> void:
 	visible = false
 	panel = Panel.new()
+	panel.name = "Panel"
 	panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	panel.offset_left = 36
 	panel.offset_right = -36
@@ -40,6 +44,7 @@ func _ready() -> void:
 	panel.add_theme_stylebox_override("panel", panel_style)
 	add_child(panel)
 	portrait_panel = Panel.new()
+	portrait_panel.name = "PortraitPanel"
 	portrait_panel.position = Vector2(20, 20)
 	portrait_panel.size = Vector2(82, 104)
 	var portrait_style := StyleBoxFlat.new()
@@ -56,13 +61,30 @@ func _ready() -> void:
 	portrait_panel.add_theme_stylebox_override("panel", portrait_style)
 	portrait_panel.visible = false
 	panel.add_child(portrait_panel)
+	portrait_texture = TextureRect.new()
+	portrait_texture.name = "PortraitTexture"
+	portrait_texture.position = Vector2(6, 6)
+	portrait_texture.size = Vector2(70, 92)
+	portrait_texture.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	portrait_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	portrait_texture.visible = false
+	portrait_panel.add_child(portrait_texture)
+	portrait_fallback = ColorRect.new()
+	portrait_fallback.name = "PortraitFallback"
+	portrait_fallback.position = Vector2(6, 6)
+	portrait_fallback.size = Vector2(70, 92)
+	portrait_fallback.color = Color(0.22, 0.2, 0.18)
+	portrait_fallback.visible = false
+	portrait_panel.add_child(portrait_fallback)
 	portrait_label = Label.new()
-	portrait_label.text = "portrait"
+	portrait_label.name = "PortraitLabel"
+	portrait_label.text = ""
 	portrait_label.position = Vector2(8, 38)
-	portrait_label.size = Vector2(66, 24)
+	portrait_label.size = Vector2(66, 28)
 	portrait_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	portrait_label.add_theme_font_size_override("font_size", 10)
-	portrait_label.add_theme_color_override("font_color", Color(0.68, 0.64, 0.56))
+	portrait_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	portrait_label.add_theme_font_size_override("font_size", 18)
+	portrait_label.add_theme_color_override("font_color", Color(0.88, 0.82, 0.68))
 	portrait_panel.add_child(portrait_label)
 	speaker_label = Label.new()
 	speaker_label.position = Vector2(22, 14)
@@ -135,9 +157,8 @@ func _show_current_line() -> void:
 	if game_state != null:
 		speaker = game_state.format_text(speaker)
 		text = game_state.format_text(text)
-	portrait_panel.visible = not portrait_id.is_empty()
+	_apply_portrait(portrait_id)
 	if portrait_panel.visible:
-		portrait_label.text = portrait_id
 		speaker_label.position = Vector2(122, 14)
 		text_label.position = Vector2(122, 46)
 		text_label.size = Vector2(720, 86)
@@ -152,6 +173,26 @@ func _show_current_line() -> void:
 	text_label.modulate.a = 0.0
 	var tween := create_tween()
 	tween.tween_property(text_label, "modulate:a", 1.0, 0.1)
+
+func _apply_portrait(portrait_id: String) -> void:
+	portrait_panel.visible = not portrait_id.is_empty()
+	portrait_texture.visible = false
+	portrait_texture.texture = null
+	portrait_fallback.visible = false
+	portrait_label.text = ""
+	if portrait_id.is_empty():
+		return
+	var config := Portraits.get_portrait(portrait_id)
+	var image_path := str(config.get("path", ""))
+	if not image_path.is_empty():
+		var loaded_texture := load(image_path)
+		if loaded_texture is Texture2D:
+			portrait_texture.texture = loaded_texture
+			portrait_texture.visible = true
+			return
+	portrait_fallback.color = config.get("tint", Color(0.22, 0.2, 0.18))
+	portrait_fallback.visible = true
+	portrait_label.text = str(config.get("fallback_initial", portrait_id.substr(0, 1)))
 
 func _line_lock_duration(speaker: String, text: String) -> float:
 	var base := 0.18

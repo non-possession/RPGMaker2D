@@ -25,6 +25,15 @@ const OBJ05_PATH := "res://assets/sprites/objects/obj05_paper_plane_broken_penci
 const OBJ06_PATH := "res://assets/sprites/objects/obj06_archive_father_record.png"
 const OBJ08_PATH := "res://assets/sprites/objects/obj08_essay_fragment.png"
 
+const V02_PLAYER_VISUAL_HEIGHT := 56
+const V02_SINGLE_DESK_SIZE := Vector2(72, 42)
+const V02_DOUBLE_DESK_SIZE := Vector2(112, 44)
+const V02_MIN_WALKABLE_AISLE := 64
+const V02_COMFORTABLE_AISLE_MIN := 80
+const V02_COMFORTABLE_AISLE_MAX := 96
+const V02_GENERATED_DESK_COLLISION_SIZE := Vector2(112, 44)
+const V02_PLACEHOLDER_DESK_COLLISION_SIZE := Vector2(72, 42)
+
 @export var use_generated_classroom_background := false
 @export var use_generated_memory_background := false
 @export var use_generated_blackboard_states := false
@@ -152,10 +161,13 @@ func _create_generated_mode_anchor_props(background: Node2D) -> void:
 	_chalk_line(props, Vector2(255, 404), Vector2(24, 2), Color(0.28, 0.25, 0.2, 0.6))
 	_chalk_line(props, Vector2(255, 411), Vector2(20, 2), Color(0.28, 0.25, 0.2, 0.45))
 	_label(props, "测绘表", Vector2(238, 430), Vector2(64, 18), 11, Color(0.82, 0.72, 0.52, 0.86))
+	_create_prop_attachment(props, "Obj05GroundAttachment", Vector2(126, 330), Vector2(86, 44), Color(0.08, 0.07, 0.055, 0.22), "floor")
 	if not _try_add_object_sprite(props, OBJ05_PATH, "Obj05PaperPlaneBrokenPencil", Vector2(168, 350)):
 		_rect(props, "AnchorPaperPlane", Vector2(142, 342), Vector2(44, 18), Color(0.74, 0.72, 0.64, 0.86))
 		_label(props, "纸飞机", Vector2(130, 362), Vector2(64, 20), 11, Color(0.78, 0.72, 0.56, 0.78))
+	_create_prop_attachment(props, "Obj06CabinetAttachment", Vector2(86, 178), Vector2(112, 44), Color(0.06, 0.055, 0.05, 0.2), "cabinet")
 	_try_add_object_sprite(props, OBJ06_PATH, "Obj06ArchiveFatherRecord", Vector2(142, 160))
+	_create_prop_attachment(props, "Obj08DeskAttachment", Vector2(352, 254), Vector2(116, 54), Color(0.12, 0.08, 0.045, 0.24), "desk")
 	if not _try_add_object_sprite(props, OBJ08_PATH, "Obj08EssayFragment", Vector2(410, 282)):
 		_rect(props, "AnchorEssayFragment", Vector2(374, 268), Vector2(46, 28), Color(0.72, 0.66, 0.52, 0.82))
 		_label(props, "作文本", Vector2(366, 296), Vector2(62, 18), 11, Color(0.78, 0.72, 0.56, 0.78))
@@ -182,6 +194,26 @@ func _create_wall_anchor_props(parent: Node2D) -> void:
 	_label(plaque, Names.NAMES["school"], Vector2(8, 8), Vector2(54, 18), 12, Color(0.78, 0.7, 0.48, 0.9))
 	_chalk_line(plaque, Vector2(12, 28), Vector2(44, 2), Color(0.12, 0.1, 0.08, 0.58))
 
+func _create_prop_attachment(parent: Node2D, node_name: String, position: Vector2, size: Vector2, shadow_color: Color, kind: String) -> Node2D:
+	var root := Node2D.new()
+	root.name = node_name
+	root.position = position
+	parent.add_child(root)
+	var shadow := _rect(root, "ContactShadow", Vector2.ZERO, size, shadow_color)
+	shadow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	match kind:
+		"desk":
+			_rect(root, "DeskSurface", Vector2(6, 5), Vector2(size.x - 12, size.y - 12), Color(0.34, 0.22, 0.14, 0.52))
+			_rect(root, "DrawerLip", Vector2(10, size.y - 16), Vector2(size.x - 20, 7), Color(0.16, 0.1, 0.065, 0.58))
+			_chalk_line(root, Vector2(14, 12), Vector2(size.x - 28, 2), Color(0.52, 0.36, 0.2, 0.38))
+		"cabinet":
+			_rect(root, "CabinetShelf", Vector2(6, 6), Vector2(size.x - 12, 12), Color(0.18, 0.17, 0.16, 0.5))
+			_rect(root, "OpenRecordSurface", Vector2(24, 16), Vector2(size.x - 42, size.y - 24), Color(0.64, 0.57, 0.42, 0.42))
+		"floor":
+			_rect(root, "DeskLegHint", Vector2(8, 0), Vector2(8, size.y - 6), Color(0.16, 0.1, 0.065, 0.45))
+			_rect(root, "FloorDust", Vector2(20, size.y - 14), Vector2(size.x - 28, 4), Color(0.7, 0.66, 0.52, 0.18))
+	return root
+
 func _create_classroom_collision(collision_root: Node2D, using_generated_background: bool) -> void:
 	_static_rect(collision_root, "NorthBoundary", Vector2(80, 50), Vector2(720, 28))
 	_static_rect(collision_root, "SouthBoundary", Vector2(80, 468), Vector2(720, 28))
@@ -189,19 +221,29 @@ func _create_classroom_collision(collision_root: Node2D, using_generated_backgro
 	_static_rect(collision_root, "EastBoundary", Vector2(790, 60), Vector2(28, 420))
 	if using_generated_background:
 		_static_rect(collision_root, "GeneratedCabinetCollision", Vector2(54, 82), Vector2(122, 145))
+		_static_rect(collision_root, "GeneratedBlackboardCollision", Vector2(250, 76), Vector2(322, 70))
+		_static_rect(collision_root, "GeneratedAwardCollision", Vector2(202, 56), Vector2(82, 58))
+		_static_rect(collision_root, "GeneratedClosureNoticeCollision", Vector2(620, 52), Vector2(92, 72))
+		_static_rect(collision_root, "GeneratedSchoolPlaqueCollision", Vector2(708, 58), Vector2(82, 48))
+		_static_rect(collision_root, "GeneratedWindowWallCollision", Vector2(744, 86), Vector2(48, 302))
 		var generated_desks := [
 			Vector2(278, 204), Vector2(462, 204), Vector2(644, 204),
 			Vector2(278, 288), Vector2(462, 288), Vector2(644, 288),
 			Vector2(278, 372), Vector2(462, 372), Vector2(644, 372),
 		]
 		for index in range(generated_desks.size()):
-			_static_rect(collision_root, "GeneratedDeskCollision_%02d" % index, generated_desks[index], Vector2(82, 34))
+			_static_rect(collision_root, "GeneratedDeskCollision_%02d" % index, generated_desks[index], V02_GENERATED_DESK_COLLISION_SIZE)
 		return
+	_static_rect(collision_root, "BlackboardCollision", Vector2(252, 78), Vector2(318, 68))
+	_static_rect(collision_root, "AwardCollision", Vector2(126, 76), Vector2(78, 46))
+	_static_rect(collision_root, "ClosureNoticeCollision", Vector2(604, 116), Vector2(100, 64))
+	_static_rect(collision_root, "SchoolPlaqueCollision", Vector2(590, 76), Vector2(104, 40))
+	_static_rect(collision_root, "WindowWallCollision", Vector2(748, 112), Vector2(44, 264))
 	_static_rect(collision_root, "TeacherDeskCollision", Vector2(218, 386), Vector2(120, 42))
 	_static_rect(collision_root, "CabinetCollision", Vector2(112, 118), Vector2(88, 86))
 	for row in range(3):
 		for col in range(3):
-			_static_rect(collision_root, "DeskCollision_%d_%d" % [row, col], Vector2(235 + col * 130, 210 + row * 58), Vector2(72, 28))
+			_static_rect(collision_root, "DeskCollision_%d_%d" % [row, col], Vector2(235 + col * 130, 210 + row * 58), V02_PLACEHOLDER_DESK_COLLISION_SIZE)
 
 func _try_add_generated_background(parent: Node2D) -> bool:
 	if not use_generated_classroom_background:
@@ -370,7 +412,7 @@ func _create_interactables() -> void:
 		data["id"] = id
 		var area := Area2D.new()
 		area.set_script(InteractableScript)
-		area.position = data.get("position", Vector2.ZERO)
+		area.position = data.get("hotspot_position", data.get("position", Vector2.ZERO))
 		root.add_child(area)
 		area.call("setup", data, game_state, data.get("size", Vector2(48, 34)))
 		area.add_to_group("interactables")
@@ -491,6 +533,7 @@ func _static_rect(parent: Node, body_name: String, position: Vector2, size: Vect
 	body.collision_layer = 1
 	body.collision_mask = 0
 	var shape := CollisionShape2D.new()
+	shape.name = "CollisionShape2D"
 	var rectangle := RectangleShape2D.new()
 	rectangle.size = size
 	shape.shape = rectangle
